@@ -1,0 +1,133 @@
+package com.kafang.atgo.bean.fix;
+
+import java.time.LocalDateTime;
+
+import com.kafang.atgo.bean.fix.enums.MsgType;
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.MutableMap;
+
+import com.kafang.atgo.bean.fix.base.BaseFixBean;
+import com.kafang.atgo.bean.fix.base.FixMessage;
+import com.kafang.atgo.bean.fix.base.FixMessageAnalysisException;
+import com.kafang.atgo.bean.fix.field.FixPositionField;
+import com.kafang.atgo.bean.fix.field.collect.FixFieldLists;
+
+public final class FixPosition extends BaseFixBean<FixPositionField> {
+
+	private LocalDateTime sendingTime;
+	private LocalDateTime transactTime;
+	private int clientId;
+	private int symbol;
+	private int securityType;
+	private int securityExchange;
+	private int currentQty;
+	private int tradableQty;
+	private int shortQty;
+
+	public FixPosition() {
+		super(MsgType.ReportPosition);
+	}
+
+	public FixPosition(FixMessage message) throws FixMessageAnalysisException {
+		super(message);
+	}
+
+	public LocalDateTime getSendingTime() {
+		return sendingTime;
+	}
+
+	public FixPosition setSendingTime(LocalDateTime sendingTime) {
+		this.sendingTime = sendingTime;
+		return this;
+	}
+
+	public LocalDateTime getTransactTime() {
+		return transactTime;
+	}
+
+	public FixPosition setTransactTime(LocalDateTime transactTime) {
+		this.transactTime = transactTime;
+		return this;
+	}
+
+	public int getClientId() {
+		return clientId;
+	}
+
+	public FixPosition setClientId(int clientId) {
+		this.clientId = clientId;
+		return this;
+	}
+
+	public int getSymbol() {
+		return symbol;
+	}
+
+	public FixPosition setSymbol(int symbol) {
+		this.symbol = symbol;
+		return this;
+	}
+
+	public int getSecurityType() {
+		return securityType;
+	}
+
+	public FixPosition setSecurityType(int securityType) {
+		this.securityType = securityType;
+		return this;
+	}
+
+	public int getSecurityExchange() {
+		return securityExchange;
+	}
+
+	public FixPosition setSecurityExchange(int securityExchange) {
+		this.securityExchange = securityExchange;
+		return this;
+	}
+
+	public int getCurrentQty() {
+		return currentQty;
+	}
+
+	public FixPosition setCurrentQty(int currentQty) {
+		this.currentQty = currentQty;
+		return this;
+	}
+
+	public int getTradableQty() {
+		return tradableQty;
+	}
+
+	public FixPosition setTradableQty(int tradableQty) {
+		this.tradableQty = tradableQty;
+		return this;
+	}
+
+	public int getShortQty() {
+		return shortQty;
+	}
+
+	public FixPosition setShortQty(int shortQty) {
+		this.shortQty = shortQty;
+		return this;
+	}
+
+	@Override
+	public ImmutableList<FixPositionField> getFixFields() {
+		return FixFieldLists.FixPositionFields;
+	}
+
+	@Override
+	protected void setAttributes() {
+
+
+	}
+
+	@Override
+	protected MutableMap<FixPositionField, Object> attributesToMap() {
+
+		return null;
+	}
+
+}

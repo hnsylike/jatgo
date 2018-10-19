@@ -1,0 +1,11 @@
+
+logging.path=${ATGO_LOGS_DIR}
+
+mq.host = ${rabbitMQ_ipAddress}
+mq.port = ${rabbitMQ_port}
+mq.username = ${rabbitMQ_username}
+mq.password = ${rabbitMQ_password}
+
+atgo.db.url=jdbc:mysql://${mysql_ipAddress}:${mysql_port}/${mysql_databaseName}?user=${mysql_username}&password=${mysql_password}&useSSL=false&characterEncoding=utf-8
+
+mq.queue.biz.backup=${rabbitMQ_queueBizBackMod}

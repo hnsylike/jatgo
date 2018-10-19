@@ -1,0 +1,124 @@
+package com.kafang.atgo.persistence.db.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity(name = "AG_ACCOUNT")
+public class AgAccount {
+
+	public interface TableColumn {
+
+		String id = "id";
+		String AccountID = "AccountID";
+		String IsActive = "IsActive";
+		String ClientID = "ClientID";
+		String StrategyID = "StrategyID";
+		String EnableBalance = "EnableBalance";
+		String CreditBalance = "CreditBalance";
+	}
+
+	@Id
+	@Column(name = "ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(name = "AccountID", nullable = true)
+	private int AccountID;
+
+	@Column(name = "IsActive", nullable = false)
+	private boolean IsActive;
+
+	@Column(name = "ClientID", nullable = true)
+	private int ClientID;
+
+	@Column(name = "StrategyID", nullable = true)
+	private int StrategyID;
+
+	@Column(name = "EnableBalance", nullable = true)
+	private double EnableBalance;
+	
+	@Column(name = "CreditBalance", nullable = true)
+	private double CreditBalance;
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	
+
+
+
+	
+
+	public int getAccountID() {
+		return AccountID;
+	}
+
+	public AgAccount setAccountID(int accountID) {
+		AccountID = accountID;
+		return this;
+	}
+
+	public boolean isIsActive() {
+		return IsActive;
+	}
+
+	public AgAccount setIsActive(boolean isActive) {
+		IsActive = isActive;
+		return this;
+	}
+
+	public int getClientID() {
+		return ClientID;
+	}
+
+	public AgAccount setClientID(int clientID) {
+		ClientID = clientID;
+		return this;
+	}
+
+	public int getStrategyID() {
+		return StrategyID;
+	}
+
+	public double getEnableBalance() {
+		return EnableBalance;
+	}
+
+	public void setEnableBalance(double enableBalance) {
+		EnableBalance = enableBalance;
+	}
+
+	public double getCreditBalance() {
+		return CreditBalance;
+	}
+
+	public void setCreditBalance(double creditBalance) {
+		CreditBalance = creditBalance;
+	}
+
+	public AgAccount setStrategyID(int strategyID) {
+		StrategyID = strategyID;
+		return this;
+	}
+
+	@Override
+	public String toString() {
+		return "AgAccount [id=" + id + ", AccountID=" + AccountID + ", IsActive=" + IsActive + ", ClientID="
+				+ ClientID + ", StrategyID=" + StrategyID + "]";
+	}
+
+	public static void main(String[] args) {
+		new AgAccount()
+		.setAccountID(1)
+		.setClientID(1);
+	}
+	
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<properties resource="./jdbc.properties">
+		<property name="db_driver" value="com.mysql.jdbc.Driver" />
+	</properties>
+
+	<environments default="dev_conf">
+		<environment id="dev_conf">
+			<transactionManager type="JDBC" />
+			<dataSource type="">
+				<property name="driver" value="${db_driver}" />
+				<property name="url" value="${db_url}" />
+				<property name="username" value="${db_username}" />
+				<property name="password" value="${db_password}" />
+			</dataSource>
+		</environment>
+		<environment id="prod_conf">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${db_driver}" />
+				<property name="url" value="${db_url}" />
+				<property name="username" value="${db_username}" />
+				<property name="password" value="${db_password}" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<mapper class="ContLogonDao" resource="com/kafang/atgo/persistence/db/mapping/ContLogonMapper.xml" />
+	</mappers>
+
+</configuration>

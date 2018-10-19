@@ -1,0 +1,57 @@
+package com.kafang.atgo.bean.fix;
+
+import java.time.LocalDateTime;
+
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.MutableMap;
+
+import com.kafang.atgo.bean.fix.base.BaseFixBean;
+import com.kafang.atgo.bean.fix.base.FixMessage;
+import com.kafang.atgo.bean.fix.base.FixMessageAnalysisException;
+import com.kafang.atgo.bean.fix.field.FixNewsField;
+import com.kafang.atgo.bean.fix.field.collect.FixFieldLists;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+
+@Getter
+@Setter
+@ToString
+@Accessors(chain = true)
+public final class FixNews extends BaseFixBean<FixNewsField> {
+
+	private LocalDateTime sendingTime;
+	private int urgency;
+	private String headline;
+	private String text;
+
+	public FixNews(FixMessage message) throws FixMessageAnalysisException {
+		super(message);
+	}
+
+	@Override
+	public ImmutableList<FixNewsField> getFixFields() {
+		return FixFieldLists.FixNewsFields;
+	}
+
+	@Override
+	protected void setAttributes() {
+		setSendingTime((LocalDateTime) getValue(FixNewsField.SendingTime).orElse(null));
+		setUrgency((int) getValue(FixNewsField.Urgency).orElse(-1));
+		setHeadline((String) getValue(FixNewsField.Headline).orElse(""));
+		setText((String) getValue(FixNewsField.Text).orElse(""));
+	}
+
+	@Override
+	protected MutableMap<FixNewsField, Object> attributesToMap() {
+		MutableMap<FixNewsField, Object> map = newMap();
+		map.put(FixNewsField.SendingTime, getSendingTime());
+		map.put(FixNewsField.Urgency, getUrgency());
+		map.put(FixNewsField.Headline, getHeadline());
+		map.put(FixNewsField.Text, getText());
+		return map;
+	}
+
+}

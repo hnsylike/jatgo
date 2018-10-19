@@ -1,0 +1,19 @@
+package com.kafang.atgo.risk.validators;
+
+import com.kafang.atgo.bean.fix.FixOrder;
+import com.kafang.atgo.risk.base.RiskValidator;
+
+public class NewOrderHighFrequencyValidator implements RiskValidator<FixOrder> {
+
+	@Override
+	public boolean validationOrder(FixOrder inOrder) {
+		
+		return false;
+	}
+
+	@Override
+	public String getValidatorName() {
+		return this.getClass().getSimpleName();
+	}
+
+}

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.kafang</groupId>
+    <artifactId>jatgo</artifactId>
+    <version>0.1</version>
+
+    <packaging>pom</packaging>
+    <name>atgo</name>
+
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.4.RELEASE</version>
+    </parent>
+
+    <modules>
+        <module>jatgo-common</module>
+        <module>jatgo-bean</module>
+        <module>jatgo-backup</module>
+        <module>jatgo-restful</module>
+        <module>jatgo-risk</module>
+        <!-- install model should be build after all modules are build -->
+        <module>jatgo-install</module>
+    </modules>
+
+    <properties>
+        <skipFindBugs/>
+        <skipJacoco/>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <log4j.version>2.8.1</log4j.version>
+        <slf4j.version>1.7.13</slf4j.version>
+        <lombok.version>1.18.2</lombok.version>
+        <ormlite.version>5.1</ormlite.version>
+        <javax.persistence-api.version>1.0</javax.persistence-api.version>
+        <commons-lang.version>2.6</commons-lang.version>
+        <fastjson.version>1.2.47</fastjson.version>
+        <hibernate-validator.version>6.0.10.Final</hibernate-validator.version>
+        <commons-collections.version>4.2</commons-collections.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <excludes>
+                        <exclude>*.properties</exclude>
+                        <exclude>bin/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.5</version>
+                <configuration>
+                    <effort>Max</effort>
+                    <!--<threshold>High</threshold>-->
+                    <!-- Bug Rank - bugs are given a rank 1-20, and grouped into the categories scariest (rank 1-4),
+                        scary (rank 5-9), troubling (rank 10-14), and of concern (rank 15-20). -->
+                    <maxRank>10</maxRank>
+                    <xmlOutput>true</xmlOutput>
+                    <skip>${skipFindBugs}</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>failing-on-rank-scary</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- forkMode is deprecated since version 2.14 -->
+                    <!--<forkMode>1</forkMode>  &lt;!&ndash; this line breaks JaCoCo Agent &ndash;&gt;-->
+                    <reuseForks>true</reuseForks>
+                </configuration>
+            </plugin>
+
+            <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
+            <!-- fyl: https://www.eclemma.org/jacoco/trunk/doc/maven.html -->
+
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.7.9</version>
+                    <inherited>true</inherited>
+                    <configuration>
+                        <skip>${skipJacoco}</skip>
+                        <rules>
+                            <rule implementation="org.jacoco.maven.RuleConfiguration">
+                                <element>BUNDLE</element>
+                                <limits>
+                                    　　<!-- method coverage rate 80% -->
+                                    <limit implementation="org.jacoco.report.check.Limit">
+                                        <counter>METHOD</counter>
+                                        <value>COVEREDRATIO</value>
+                                        <minimum>0.80</minimum>
+                                    </limit>
+                                    <!-- bytecode instruction coverage rate 80% -->
+                                    <limit implementation="org.jacoco.report.check.Limit">
+                                        <counter>INSTRUCTION</counter>
+                                        <value>COVEREDRATIO</value>
+                                        <minimum>0.80</minimum>
+                                    </limit>
+                                    <!-- line coverage rate 80% -->
+                                    <limit implementation="org.jacoco.report.check.Limit">
+                                        <counter>LINE</counter>
+                                        <value>COVEREDRATIO</value>
+                                        <minimum>0.80</minimum>
+                                    </limit>
+                                    <!-- class coverage rate 100%，check all class -->
+                                    <limit implementation="org.jacoco.report.check.Limit">
+                                        <counter>CLASS</counter>
+                                        <value>MISSEDCOUNT</value>
+                                        <maximum>0</maximum>
+                                    </limit>
+                                </limits>
+                            </rule>
+                        </rules>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>default-prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+
+                        <execution>
+                            <id>default-check</id>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                            <configuration>
+                                <!-- 覆盖率不满足时,不让编译报错 -->
+                                <haltOnFailure>false</haltOnFailure>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>default-report</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                            <configuration>
+                                <outputEncoding>UTF-8</outputEncoding>
+                                <title>jatgo code coverage</title>
+                                <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.java</groupId>
+            <artifactId>tools</artifactId>
+            <version>1.8</version>
+            <scope>system</scope>
+            <systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${commons-collections.version}</version>
+        </dependency>
+
+        <!-- Direct log4j2 invocation to slf4j api -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-to-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.ffreedom</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-slf4j-impl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.ffreedom</groupId>
+            <artifactId>transport</artifactId>
+            <version>1.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-slf4j-impl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kafang</groupId>
+                <artifactId>jatgo-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api -->
+            <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>persistence-api</artifactId>
+                <version>${javax.persistence-api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kafang</groupId>
+                <artifactId>jatgo-bean</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kafang</groupId>
+                <artifactId>jatgo-backup</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kafang</groupId>
+                <artifactId>jatgo-restful</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kafang</groupId>
+                <artifactId>jatgo-risk</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <profiles>
+        <profile>
+            <id>automation_build</id>
+            <properties>
+                <skipFindBugs>true</skipFindBugs>
+                <skipJacoco>true</skipJacoco>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>other_build</id>
+            <properties>
+                <skipFindBugs>false</skipFindBugs>
+                <skipJacoco>false</skipJacoco>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+
+</project>

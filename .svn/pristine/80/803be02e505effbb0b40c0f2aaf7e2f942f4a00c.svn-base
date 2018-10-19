@@ -1,0 +1,180 @@
+package com.kafang.atgo.bean.fix;
+
+import java.time.LocalDateTime;
+
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.MutableMap;
+
+import com.kafang.atgo.bean.fix.base.BaseFixBean;
+import com.kafang.atgo.bean.fix.base.BizOrder;
+import com.kafang.atgo.bean.fix.base.FixMessage;
+import com.kafang.atgo.bean.fix.base.FixMessageAnalysisException;
+import com.kafang.atgo.bean.fix.enums.MsgType;
+import com.kafang.atgo.bean.fix.field.FixCancelOrderField;
+import com.kafang.atgo.bean.fix.field.collect.FixFieldLists;
+
+public final class FixCancelOrder extends BaseFixBean<FixCancelOrderField> implements BizOrder {
+
+	private int handlInst;
+	private LocalDateTime sendingTime;
+	private long origClOrdId;
+	private String orderId;
+	private long clOrdId;
+	private int accountId;
+	private int clientId;
+	private LocalDateTime transactTime;
+	private int cxlType;
+	private int ordStatus;
+	private int cxlRejReason;
+
+	private FixCancelOrder(MsgType msgType) {
+		super(msgType);
+	}
+
+	public FixCancelOrder(FixMessage message) throws FixMessageAnalysisException {
+		super(message);
+	}
+
+	public static FixCancelOrder buildFixCancelOrder() {
+		return new FixCancelOrder(MsgType.CancelOrder);
+	}
+
+	public static FixCancelOrder buildFixCancelOrderReport() {
+		return new FixCancelOrder(MsgType.CancelOrderReport);
+	}
+
+	public int getHandlInst() {
+		return handlInst;
+	}
+
+	public FixCancelOrder setHandlInst(int handlInst) {
+		this.handlInst = handlInst;
+		return this;
+	}
+
+	public LocalDateTime getSendingTime() {
+		return sendingTime;
+	}
+
+	public FixCancelOrder setSendingTime(LocalDateTime sendingTime) {
+		this.sendingTime = sendingTime;
+		return this;
+	}
+
+	public long getOrigClOrdId() {
+		return origClOrdId;
+	}
+
+	public FixCancelOrder setOrigClOrdId(long origClOrdId) {
+		this.origClOrdId = origClOrdId;
+		return this;
+	}
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public FixCancelOrder setOrderId(String orderId) {
+		this.orderId = orderId;
+		return this;
+	}
+
+	public long getClOrdId() {
+		return clOrdId;
+	}
+
+	public FixCancelOrder setClOrdId(long clOrdId) {
+		this.clOrdId = clOrdId;
+		return this;
+	}
+
+	public int getAccountId() {
+		return accountId;
+	}
+
+	public FixCancelOrder setAccountId(int accountId) {
+		this.accountId = accountId;
+		return this;
+	}
+
+	public int getClientId() {
+		return clientId;
+	}
+
+	public FixCancelOrder setClientId(int clientId) {
+		this.clientId = clientId;
+		return this;
+	}
+
+	public LocalDateTime getTransactTime() {
+		return transactTime;
+	}
+
+	public FixCancelOrder setTransactTime(LocalDateTime transactTime) {
+		this.transactTime = transactTime;
+		return this;
+	}
+
+	public int getCxlType() {
+		return cxlType;
+	}
+
+	public FixCancelOrder setCxlType(int cxlType) {
+		this.cxlType = cxlType;
+		return this;
+	}
+
+	public int getOrdStatus() {
+		return ordStatus;
+	}
+
+	public FixCancelOrder setOrdStatus(int ordStatus) {
+		this.ordStatus = ordStatus;
+		return this;
+	}
+
+	public int getCxlRejReason() {
+		return cxlRejReason;
+	}
+
+	public FixCancelOrder setCxlRejReason(int cxlRejReason) {
+		this.cxlRejReason = cxlRejReason;
+		return this;
+	}
+
+	@Override
+	public ImmutableList<FixCancelOrderField> getFixFields() {
+		return FixFieldLists.FixCancelOrderFields;
+	}
+
+	@Override
+	protected void setAttributes() {
+//		setMsgType(getValue(FixCancelOrderField.MsgType));
+//		setSendingTime(getValue(FixCancelOrderField.SendingTime));
+//		setOrigClOrdId(getValue(FixCancelOrderField.OrigClOrdID));
+//		setOrderId(getValue(FixCancelOrderField.OrderID));
+//		setClOrdId(getValue(FixCancelOrderField.ClOrdID));
+//		setAccountId(getValue(FixCancelOrderField.AccountID));
+//		setClientId(getValue(FixCancelOrderField.ClientID));
+//		setTransactTime(getValue(FixCancelOrderField.TransactTime));
+//		setOrdStatus(getValue(FixCancelOrderField.OrdStatus));
+//		setCxlRejReason(getValue(FixCancelOrderField.CxlRejReason));
+	}
+
+	@Override
+	protected MutableMap<FixCancelOrderField, Object> attributesToMap() {
+		MutableMap<FixCancelOrderField, Object> map = newMap();
+		map.put(FixCancelOrderField.SendingTime, getSendingTime());
+		map.put(FixCancelOrderField.TransactTime, getTransactTime());
+		map.put(FixCancelOrderField.HandlInst, getHandlInst());
+		map.put(FixCancelOrderField.OrigClOrdID, getOrigClOrdId());
+		map.put(FixCancelOrderField.OrderID, getOrderId());
+		map.put(FixCancelOrderField.ClOrdID, getClOrdId());
+		map.put(FixCancelOrderField.AccountID, getAccountId());
+		map.put(FixCancelOrderField.ClientID, getClientId());
+		map.put(FixCancelOrderField.OrdStatus, getOrdStatus());
+		map.put(FixCancelOrderField.CxlRejReason, getCxlRejReason());
+		return map;
+	}
+
+}

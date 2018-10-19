@@ -1,0 +1,98 @@
+package com.kafang.atgo.restful.resource;
+
+import com.kafang.atgo.restful.service.RabbitMQService;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+/**
+ * Created by xuejian.sun on 2018/10/8.
+ */
+@Slf4j
+public abstract class AbstractBaseControllerTest {
+
+    @Autowired
+    protected JdbcTemplate jdbcTemplate;
+
+    @MockBean
+    private RabbitMQService rabbitMQService;
+
+    @Autowired
+    protected TestRestTemplate restTemplate;
+
+    @LocalServerPort
+    protected int port;
+
+    @Value("${spring.jersey.application-path:}")
+    protected String applicationPath;
+
+    protected URL baseURL;
+
+    @BeforeClass
+    public static void classLoadBefore() {
+        System.setProperty("spring.profiles.active", "integration");
+    }
+
+    @Before
+    public void setup() throws MalformedURLException {
+        String subPath = subPath();
+        if(subPath == null) {
+            subPath = "";
+        }
+        String url = String.format("http://localhost:%d/%s/%s", port, applicationPath, subPath);
+        log.info("base url is {}", url);
+        baseURL = new URL(url);
+    }
+
+    /**
+     * @return subPath notNull ,default should be ""
+     */
+    protected abstract String subPath();
+
+
+
+    public <T> T getForObj(String url, ParameterizedTypeReference<T> reference) {
+        return restTemplate.
+                exchange(url,
+                        HttpMethod.GET,
+                        null,
+                        reference).getBody();
+    }
+
+    public <T> T getForObj(String url, ParameterizedTypeReference<T> reference,Object... urlVariables) {
+        return restTemplate.
+                exchange(url,
+                        HttpMethod.GET,
+                        null,
+                        reference,urlVariables).getBody();
+    }
+
+    public <T> T postForObj(String url, ParameterizedTypeReference<T> reference) {
+        return restTemplate.
+                exchange(url,
+                        HttpMethod.POST,
+                        null,
+                        reference).getBody();
+    }
+
+    public <T> T postForObj(String url,Object object, ParameterizedTypeReference<T> reference) {
+        HttpEntity<Object> entity = new HttpEntity<>(object);
+        return restTemplate.
+                exchange(url,
+                        HttpMethod.POST,
+                        entity,
+                        reference).getBody();
+    }
+}

@@ -1,0 +1,93 @@
+package com.kafang.atgo.utils;
+
+import com.google.common.base.Joiner;
+import com.kafang.atgo.AtgoErrorCode;
+import com.kafang.atgo.AtgoException;
+import org.apache.commons.collections4.CollectionUtils;
+import org.hibernate.validator.HibernateValidator;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+/**
+ * class field validation util
+ *
+ *  how use it : http://hibernate.org/validator/
+ *
+ * @author xuejian.sun
+ * @date 2018/10/11 13:28
+ */
+public final class AtgoValidator<T> {
+
+    private T t;
+
+    private Validator validator;
+
+    private AtgoValidator(T t, boolean failFast) {
+        this.t = t;
+        this.validator = Validation
+                .byProvider(HibernateValidator.class)
+                .configure()
+                .failFast(failFast)
+                .buildValidatorFactory()
+                .getValidator();
+
+    }
+
+    public static <T> AtgoValidator<T> initialize(T t) {
+        return new AtgoValidator<T>(t, false);
+    }
+
+    public static <T> AtgoValidator<T> initialize(T t, boolean failFast) {
+        return new AtgoValidator<T>(t, failFast);
+    }
+
+    /**
+     * 获取所有校验错误信息
+     * @param groupClass 有分组的情况下传递。
+     * @return
+     */
+    public List<String> allError(Class<?>... groupClass) {
+        return validator
+                .validate(t, groupClass)
+                .stream()
+                .map(cv -> cv.getMessage())
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * @param groupClass
+     * @return
+     */
+    public Set<ConstraintViolation<T>> errorResult(Class<?>... groupClass){
+        return validator.validate(t,groupClass);
+    }
+
+    public void throwFirstError(Class<?>... groupClass){
+        Optional<String> error = validator
+                .validate(t, groupClass)
+                .stream()
+                .findFirst()
+                .map(cv -> cv.getMessage());
+        if(error.isPresent()){
+            throw new AtgoException(AtgoErrorCode.VALIDATION_ERROR,error.get());
+        }
+    }
+
+    /**
+     * 按照指定符号分隔错误消息并抛出
+     * @param separator
+     * @param groupClass
+     */
+    public void throwAllErrorOn(String separator,Class<?>... groupClass){
+        List<String> list = allError(groupClass);
+        if(!CollectionUtils.isEmpty(list)){
+            throw new AtgoException(AtgoErrorCode.VALIDATION_ERROR, Joiner.on(separator).join(list));
+        }
+    }
+}

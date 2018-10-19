@@ -1,0 +1,75 @@
+package com.kafang.atgo.restful.entity;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.sql.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Getter
+@Setter
+@ToString
+@Entity(name = "MSGD_ORDER_ACTL")
+public class MsgdOrderActl {
+
+	public interface TableColumn {
+		
+		String ClOrdID = "clOrdID";
+		String ClientID = "clientID";
+		String Account = "account";
+		String QuoteID = "QuoteID";
+		String Symbol = "symbol";
+		String SecurityType = "securityType";
+		String SecurityExchange = "securityExchange";
+		String Side = "side";
+		String TransactTime = "transactTime";
+		String OrderQty = "orderQty";
+		String OrdType = "ordType";
+		String Price = "price";
+
+	}
+
+	@Column(name = "ClOrdID", length = 50, nullable = true)
+	private String ClOrdID;
+
+	@Column(name = "ClientID", length = 11, nullable = true)
+	private Long ClientID;
+
+	@Column(name = "Account", length = 10, nullable = true)
+	private String Account;
+
+	@Column(name = "QuoteID", length = 11, nullable = true)
+	private String QuoteID;
+
+	@Column(name = "Symbol", length = 11, nullable = true)
+	private Long Symbol;
+
+	@Column(name = "SecurityType", length = 11, nullable = true)
+	private Long SecurityType;
+
+	@Column(name = "SecurityExchange", length = 11, nullable = true)
+	private Long SecurityExchange;
+
+	@Column(name = "Side", length = 11, nullable = true)
+	private Long Side;
+
+	@Column(name = "TransactTime", nullable = true)
+	private Date TransactTime;
+
+	@Column(name = "OrderQty", length = 11, nullable = true)
+	private Long OrderQty;
+
+	@Column(name = "OrdType", length = 11, nullable = true)
+	private Long OrdType;
+
+	@Column(name = "Price", nullable = true)
+	private Long Price;
+
+	@Column(name = "Text", length = 200, nullable = true)
+	private String Text;
+
+
+}

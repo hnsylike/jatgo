@@ -1,0 +1,55 @@
+[
+	{
+		"processId": 1,
+		"processName": "Adaptor",
+		"resendQueue": "REC_ADAPTOR",
+		"resendMessages": [
+			"ReportActual"
+		]
+	},
+	{
+		"processId": 2,
+		"processName": "WebServer",
+		"resendQueue": "REC_WEBSERVER",
+		"resendMessages": [
+			"ReportAlgo",
+			"CancelAlgo"
+		]
+	},
+	{
+		"processId": 4,
+		"processName": "RiskMod",
+		"resendQueue": "REC_RISKMOD",
+		"resendMessages": [
+			"OrderActual",
+			"CancelActual"
+			"ReportActual",
+			"ReportPosition",
+			"InstrumentInfo",
+		]
+	},
+	{
+		"processId": 5,
+		"processName": "SimulExch",
+		"resendQueue": "REC_SIMULEXCH",
+		"resendMessages": []
+	},
+	{
+		"processId": 6,
+		"processName": "StratMod",
+		"resendQueue": "REC_STRATMOD",
+		"resendMessages": [
+			"OrderAlgo",
+			"CancelAlgo",
+			"ReportPosition",
+			"ReportUncensor",
+			"InstrumentInfo"
+		]
+	},
+	{
+		"processId": 7,
+		"processName": "MDL1Pub",
+		"resendQueue": "REC_MDL1PUB",
+		"resendMessages": []
+	}
+]

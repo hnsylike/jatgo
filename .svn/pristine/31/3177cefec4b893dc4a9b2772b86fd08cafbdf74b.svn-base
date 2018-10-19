@@ -1,0 +1,25 @@
+[
+    {
+        "namespace": "com.kafang.atgo.memory.avro.record",
+        "type": "record",
+        "name": "News",
+        "fields": [
+            {
+                "name": "sendingTime",
+                "type": "long"
+            },
+            {
+                "name": "urgency",
+                "type": "int"
+            },
+            {
+                "name": "headline",
+                "type": "string"
+            },
+            {
+                "name": "text",
+                "type": "string"
+            }
+        ]
+    }
+]

@@ -1,0 +1,45 @@
+[
+    {
+        "namespace": "com.kafang.atgo.memory.avro.record",
+        "type": "record",
+        "name": "InstrumentInfo",
+        "fields": [
+            {
+                "name": "sendingTime",
+                "type": "long"
+            },
+            {
+                "name": "instrumentId",
+                "type": "int"
+            },
+            {
+                "name": "transactTime",
+                "type": "long"
+            },
+            {
+                "name": "prevClosePrice",
+                "type": "double"
+            },
+            {
+                "name": "upPrice",
+                "type": "double"
+            },
+            {
+                "name": "downPrice",
+                "type": "double"
+            },
+            {
+                "name": "tickSize",
+                "type": "double"
+            },
+            {
+                "name": "lotSize",
+                "type": "int"
+            },
+            {
+                "name": "specTreat",
+                "type": "int"
+            }
+        ]
+    }
+]

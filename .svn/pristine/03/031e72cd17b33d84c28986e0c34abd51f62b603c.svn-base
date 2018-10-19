@@ -1,0 +1,79 @@
+package com.kafang.atgo.restful.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import com.kafang.atgo.persistence.db.base.entity.SimpleEntity;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@Entity(name = "AG_CLIENT")
+public class AgClient implements SimpleEntity {
+
+	public interface TableColumn {
+
+		String id = "id";
+		String ClientID = "ClientID";
+		String ClientName = "ClientName";
+		String Broker = "Broker";
+		String CustomerID = "CustomerID";
+		String AdaptorType = "AdaptorType";
+		String AdaptorUser1 = "AdaptorUser1";
+		String AdaptorUser2 = "AdaptorUser2";
+		String AdaptorUser3 = "AdaptorUser3";
+		String AdaptorPwd1 = "AdaptorPwd1";
+		String AdaptorPwd2 = "AdaptorPwd2";
+		String AdaptorPwd3 = "AdaptorPwd3";
+		String NeedCert = "NeedCert";
+		String IsCredit = "IsCredit";
+	}
+
+	@Id
+	@Column(name = "ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(name = "ClientID", length = 100, nullable = true)
+	private int ClientID;
+
+	@Column(name = "ClientName", length = 255, nullable = true)
+	private String ClientName;
+
+	@Column(name = "Broker", length = 255, nullable = true)
+	private String Broker;
+
+	@Column(name = "CustomerID", length = 100, nullable = true)
+	private Long CustomerID;
+
+	@Column(name = "AdaptorType", length = 255, nullable = true)
+	private String AdaptorType;
+
+	@Column(name = "AdaptorUser1", length = 255, nullable = true)
+	private String AdaptorUser1;
+
+	@Column(name = "AdaptorUser2", length = 255, nullable = true)
+	private String AdaptorUser2;
+
+	@Column(name = "AdaptorUser3", length = 255, nullable = true)
+	private String AdaptorUser3;
+
+	@Column(name = "AdaptorPwd1", length = 255, nullable = true)
+	private String AdaptorPwd1;
+
+	@Column(name = "AdaptorPwd2", length = 255, nullable = true)
+	private String AdaptorPwd2;
+
+	@Column(name = "AdaptorPwd3", length = 255, nullable = true)
+	private String AdaptorPwd3;
+
+	@Column(name = "IsCredit", length = 1, nullable = true)
+	private int IsCredit;
+
+}

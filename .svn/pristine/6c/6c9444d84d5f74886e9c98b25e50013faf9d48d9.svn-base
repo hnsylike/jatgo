@@ -1,0 +1,9 @@
+-- 初始化 customer表 合client表
+insert into AG_CUSTOMER values ('1','2','demo');
+
+INSERT INTO AG_CLIENT
+  (`ID`, `ClientID`, `ClientName`,
+   `Broker`, `IsCredit`, `AdaptorType`,
+    `AdaptorUser1`, `AdaptorUser2`, `AdaptorUser3`,
+     `AdaptorPwd1`, `AdaptorPwd2`, `AdaptorPwd3`, `CustomerID`)
+VALUES ('1', '1', 'clientTest', 'gtja', '0', 'TDX', 'user1', 'user2', 'user3', '1234', '1234', '1234', '2');

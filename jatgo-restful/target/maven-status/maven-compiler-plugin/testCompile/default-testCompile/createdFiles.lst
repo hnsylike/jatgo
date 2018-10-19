@@ -1,0 +1,6 @@
+com\kafang\atgo\restful\resource\UserRestfulApiTest$1.class
+com\kafang\atgo\restful\config\RabbitMqServiceMock.class
+com\kafang\atgo\restful\resource\AbstractBaseControllerTest.class
+com\kafang\atgo\restful\unit_test\MockitoTest.class
+com\kafang\atgo\restful\resource\UserRestfulApiTest.class
+com\kafang\atgo\restful\AppTest.class

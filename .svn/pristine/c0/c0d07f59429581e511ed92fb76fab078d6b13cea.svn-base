@@ -1,0 +1,373 @@
+package com.kafang.atgo.bean.fix;
+
+import java.time.LocalDateTime;
+
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.MutableMap;
+
+import com.kafang.atgo.bean.fix.base.BaseFixBean;
+import com.kafang.atgo.bean.fix.base.FixMessage;
+import com.kafang.atgo.bean.fix.base.FixMessageAnalysisException;
+import com.kafang.atgo.bean.fix.field.FixMarketDataField;
+import com.kafang.atgo.bean.fix.field.collect.FixFieldLists;
+
+public final class FixMarketData extends BaseFixBean<FixMarketDataField> {
+
+	private LocalDateTime sendingTime;
+	private int symbol;
+	private int securityType;
+	private int securityExchange;
+	private LocalDateTime transactTime;
+	private int tradingSessionID;
+	private long totalVolumeTraded;
+	private double totalAmtTraded;
+	private double lastPx;
+	private double highPx;
+	private double lowPx;
+	private double openPx;
+
+	private double bidPrice1;
+	private double bidPrice2;
+	private double bidPrice3;
+	private double bidPrice4;
+	private double bidPrice5;
+	private double askPrice1;
+	private double askPrice2;
+	private double askPrice3;
+	private double askPrice4;
+	private double askPrice5;
+
+	private long bidVolume1;
+	private long bidVolume2;
+	private long bidVolume3;
+	private long bidVolume4;
+	private long bidVolume5;
+	private long askVolume1;
+	private long askVolume2;
+	private long askVolume3;
+	private long askVolume4;
+	private long askVolume5;
+
+
+	public FixMarketData(FixMessage message) throws FixMessageAnalysisException {
+		super(message);
+	}
+
+
+	public LocalDateTime getSendingTime() {
+		return sendingTime;
+	}
+
+	public FixMarketData setSendingTime(LocalDateTime sendingTime) {
+		this.sendingTime = sendingTime;
+		return this;
+	}
+
+	public int getSymbol() {
+		return symbol;
+	}
+
+	public FixMarketData setSymbol(int symbol) {
+		this.symbol = symbol;
+		return this;
+	}
+
+	public int getSecurityType() {
+		return securityType;
+	}
+
+	public FixMarketData setSecurityType(int securityType) {
+		this.securityType = securityType;
+		return this;
+	}
+
+	public int getSecurityExchange() {
+		return securityExchange;
+	}
+
+	public FixMarketData setSecurityExchange(int securityExchange) {
+		this.securityExchange = securityExchange;
+		return this;
+	}
+
+	public LocalDateTime getTransactTime() {
+		return transactTime;
+	}
+
+	public FixMarketData setTransactTime(LocalDateTime transactTime) {
+		this.transactTime = transactTime;
+		return this;
+	}
+
+	public int getTradingSessionID() {
+		return tradingSessionID;
+	}
+
+	public FixMarketData setTradingSessionID(int tradingSessionID) {
+		this.tradingSessionID = tradingSessionID;
+		return this;
+	}
+
+	public long getTotalVolumeTraded() {
+		return totalVolumeTraded;
+	}
+
+	public FixMarketData setTotalVolumeTraded(long totalVolumeTraded) {
+		this.totalVolumeTraded = totalVolumeTraded;
+		return this;
+	}
+
+	public double getTotalAmtTraded() {
+		return totalAmtTraded;
+	}
+
+	public FixMarketData setTotalAmtTraded(double totalAmtTraded) {
+		this.totalAmtTraded = totalAmtTraded;
+		return this;
+	}
+
+	public double getLastPx() {
+		return lastPx;
+	}
+
+	public FixMarketData setLastPx(double lastPx) {
+		this.lastPx = lastPx;
+		return this;
+	}
+
+	public double getHighPx() {
+		return highPx;
+	}
+
+	public FixMarketData setHighPx(double highPx) {
+		this.highPx = highPx;
+		return this;
+	}
+
+	public double getLowPx() {
+		return lowPx;
+	}
+
+	public FixMarketData setLowPx(double lowPx) {
+		this.lowPx = lowPx;
+		return this;
+	}
+
+	public double getOpenPx() {
+		return openPx;
+	}
+
+	public FixMarketData setOpenPx(double openPx) {
+		this.openPx = openPx;
+		return this;
+	}
+
+	public double getBidPrice1() {
+		return bidPrice1;
+	}
+
+	public FixMarketData setBidPrice1(double bidPrice1) {
+		this.bidPrice1 = bidPrice1;
+		return this;
+	}
+
+	public double getBidPrice2() {
+		return bidPrice2;
+	}
+
+	public FixMarketData setBidPrice2(double bidPrice2) {
+		this.bidPrice2 = bidPrice2;
+		return this;
+	}
+
+	public double getBidPrice3() {
+		return bidPrice3;
+	}
+
+	public FixMarketData setBidPrice3(double bidPrice3) {
+		this.bidPrice3 = bidPrice3;
+		return this;
+	}
+
+	public double getBidPrice4() {
+		return bidPrice4;
+	}
+
+	public FixMarketData setBidPrice4(double bidPrice4) {
+		this.bidPrice4 = bidPrice4;
+		return this;
+	}
+
+	public double getBidPrice5() {
+		return bidPrice5;
+	}
+
+	public FixMarketData setBidPrice5(double bidPrice5) {
+		this.bidPrice5 = bidPrice5;
+		return this;
+	}
+
+	public double getAskPrice1() {
+		return askPrice1;
+	}
+
+	public FixMarketData setAskPrice1(double askPrice1) {
+		this.askPrice1 = askPrice1;
+		return this;
+	}
+
+	public double getAskPrice2() {
+		return askPrice2;
+	}
+
+	public FixMarketData setAskPrice2(double askPrice2) {
+		this.askPrice2 = askPrice2;
+		return this;
+	}
+
+	public double getAskPrice3() {
+		return askPrice3;
+	}
+
+	public FixMarketData setAskPrice3(double askPrice3) {
+		this.askPrice3 = askPrice3;
+		return this;
+	}
+
+	public double getAskPrice4() {
+		return askPrice4;
+	}
+
+	public FixMarketData setAskPrice4(double askPrice4) {
+		this.askPrice4 = askPrice4;
+		return this;
+	}
+
+	public double getAskPrice5() {
+		return askPrice5;
+	}
+
+	public FixMarketData setAskPrice5(double askPrice5) {
+		this.askPrice5 = askPrice5;
+		return this;
+	}
+
+	public long getBidVolume1() {
+		return bidVolume1;
+	}
+
+	public FixMarketData setBidVolume1(long bidVolume1) {
+		this.bidVolume1 = bidVolume1;
+		return this;
+	}
+
+	public long getBidVolume2() {
+		return bidVolume2;
+	}
+
+	public FixMarketData setBidVolume2(long bidVolume2) {
+		this.bidVolume2 = bidVolume2;
+		return this;
+	}
+
+	public long getBidVolume3() {
+		return bidVolume3;
+	}
+
+	public FixMarketData setBidVolume3(long bidVolume3) {
+		this.bidVolume3 = bidVolume3;
+		return this;
+	}
+
+	public long getBidVolume4() {
+		return bidVolume4;
+	}
+
+	public FixMarketData setBidVolume4(long bidVolume4) {
+		this.bidVolume4 = bidVolume4;
+		return this;
+	}
+
+	public long getBidVolume5() {
+		return bidVolume5;
+	}
+
+	public FixMarketData setBidVolume5(long bidVolume5) {
+		this.bidVolume5 = bidVolume5;
+		return this;
+	}
+
+	public long getAskVolume1() {
+		return askVolume1;
+	}
+
+	public FixMarketData setAskVolume1(long askVolume1) {
+		this.askVolume1 = askVolume1;
+		return this;
+	}
+
+	public long getAskVolume2() {
+		return askVolume2;
+	}
+
+	public FixMarketData setAskVolume2(long askVolume2) {
+		this.askVolume2 = askVolume2;
+		return this;
+	}
+
+	public long getAskVolume3() {
+		return askVolume3;
+	}
+
+	public FixMarketData setAskVolume3(long askVolume3) {
+		this.askVolume3 = askVolume3;
+		return this;
+	}
+
+	public long getAskVolume4() {
+		return askVolume4;
+	}
+
+	public FixMarketData setAskVolume4(long askVolume4) {
+		this.askVolume4 = askVolume4;
+		return this;
+	}
+
+	public long getAskVolume5() {
+		return askVolume5;
+	}
+
+	public FixMarketData setAskVolume5(long askVolume5) {
+		this.askVolume5 = askVolume5;
+		return this;
+	}
+
+	@Override
+	public ImmutableList<FixMarketDataField> getFixFields() {
+		return FixFieldLists.FixMarketDataFields;
+	}
+
+	@Override
+	protected void setAttributes() {
+//		setMsgType(getValue(FixMarketDataField.MsgType));
+//		setSendingTime(getValue(FixMarketDataField.SendingTime));
+//		setSymbol(getValue(FixMarketDataField.Symbol));
+//		setSecurityType(getValue(FixMarketDataField.SecurityType));
+//		setSecurityExchange(getValue(FixMarketDataField.SecurityExchange));
+//		setTransactTime(getValue(FixMarketDataField.TransactTime));
+//		setTradingSessionID(getValue(FixMarketDataField.TradingSessionID));
+//		setTotalVolumeTraded(getValue(FixMarketDataField.TotalVolumeTraded));
+//		setTotalAmtTraded(getValue(FixMarketDataField.TotalAmtTraded));
+//		setLastPx(getValue(FixMarketDataField.LastPx));
+//		setHighPx(getValue(FixMarketDataField.HighPx));
+//		setLowPx(getValue(FixMarketDataField.LowPx));
+//		setOpenPx(getValue(FixMarketDataField.OpenPx));
+		// setBidPrice1(getValue(FixMarketDataField.))
+	}
+
+	@Override
+	protected MutableMap<FixMarketDataField, Object> attributesToMap() {
+		return null;
+	}
+
+}

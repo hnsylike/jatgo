@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jatgo-backup" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jatgo-bean" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jatgo-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jatgo-install" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jatgo-persistence" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jatgo-restful" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jatgo-risk" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jatgo-service" charset="UTF-8" />
+  </component>
+</project>

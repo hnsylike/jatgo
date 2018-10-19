@@ -1,0 +1,70 @@
+package com.kafang.atgo.bean.fix;
+
+import java.time.LocalDateTime;
+
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.MutableMap;
+
+import com.kafang.atgo.bean.fix.base.BaseFixBean;
+import com.kafang.atgo.bean.fix.base.FixMessage;
+import com.kafang.atgo.bean.fix.base.FixMessageAnalysisException;
+import com.kafang.atgo.bean.fix.base.FixRequiredFieldMissingException;
+import com.kafang.atgo.bean.fix.base.InvalidFixFieldValue;
+import com.kafang.atgo.bean.fix.enums.MsgType;
+import com.kafang.atgo.bean.fix.field.FixBalanceField;
+import com.kafang.atgo.bean.fix.field.collect.FixFieldLists;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+
+@Getter
+@Setter
+@ToString
+@Accessors(chain = true)
+public final class FixBalance extends BaseFixBean<FixBalanceField> {
+
+	private LocalDateTime sendingTime;
+	private int clientId;
+	private LocalDateTime transactTime;
+	private double enableBalance;
+	private double creditBalance;
+
+	public FixBalance() {
+		super(MsgType.ReportBalance);
+	}
+
+	public FixBalance(FixMessage message) throws FixMessageAnalysisException {
+		super(message);
+	}
+
+	@Override
+	public ImmutableList<FixBalanceField> getFixFields() {
+		return FixFieldLists.FixBalanceFields;
+	}
+
+	@Override
+	protected void setAttributes() {
+		setSendingTime((LocalDateTime) getValue(FixBalanceField.SendingTime)
+				.orElseThrow(() -> new FixRequiredFieldMissingException(FixBalanceField.SendingTime)));
+		setClientId((int) getValue(FixBalanceField.ClientID)
+				.orElseThrow(() -> new FixRequiredFieldMissingException(FixBalanceField.ClientID)));
+		setTransactTime(
+				(LocalDateTime) getValue(FixBalanceField.TransactTime).orElse(InvalidFixFieldValue.TransactTime));
+		setEnableBalance((double) getValue(FixBalanceField.EnableBalance).orElse(InvalidFixFieldValue.EnableBalance));
+		setCreditBalance((double) getValue(FixBalanceField.CreditBalance).orElse(InvalidFixFieldValue.CreditBalance));
+	}
+
+	@Override
+	protected MutableMap<FixBalanceField, Object> attributesToMap() {
+		MutableMap<FixBalanceField, Object> map = newMap();
+		map.put(FixBalanceField.SendingTime, getSendingTime());
+		map.put(FixBalanceField.ClientID, getClientId());
+		map.put(FixBalanceField.TransactTime, getTransactTime());
+		map.put(FixBalanceField.EnableBalance, getEnableBalance());
+		map.put(FixBalanceField.CreditBalance, getCreditBalance());
+		return map;
+	}
+
+}

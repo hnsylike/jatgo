@@ -1,0 +1,74 @@
+membTag,membName,membType
+35,MsgType,std::string
+52,SendingTime,long long
+60,TransactTime,long long
+1360,ProcessID,enum
+55,Symbol,int
+167,SecurityType,enum
+207,SecurityExchange,enum
+140,PrevClosePx,double
+1403,UpPx,double
+1404,DownPx,double
+1405,TickSize,int
+1406,LotSize,int
+1407,SpecTreat,enum
+336,TradingSession,enum
+387,TotalVolumeTraded,long long
+1401,TotalAmtTraded,double
+31,LastPx,double
+332,HighPx,double
+333,LowPx,double
+1402,OpenPx,double
+1501,BidPrice1,double
+1502,BidPrice2,double
+1503,BidPrice3,double
+1504,BidPrice4,double
+1505,BidPrice5,double
+1601,AskPrice1,double
+1602,AskPrice2,double
+1603,AskPrice3,double
+1604,AskPrice4,double
+1605,AskPrice5,double
+1701,BidVolume1,long long
+1702,BidVolume2,long long
+1703,BidVolume3,long long
+1704,BidVolume4,long long
+1705,BidVolume5,long long
+1801,AskVolume1,long long
+1802,AskVolume2,long long
+1803,AskVolume3,long long
+1804,AskVolume4,long long
+1805,AskVolume5,long long
+11,ClOrdID,long long
+109,ClientID,int
+1340,AccountID,int
+21,HandlInst,enum
+117,QuoteID,long long
+54,Side,enum
+38,OrderQty,int
+40,OrdType,enum
+44,Price,double
+168,EffectiveTime,long long
+126,ExpireTime,long long
+17,ExecID,long long
+37,OrderID,char[_NCHAR_OrderID]
+14,CumQty,int
+151,LeavesQty,int
+1370,OutstandingQty,int
+6,AvgPx,double
+39,OrdStatus,enum
+1410,LimitAction,int
+1411,AfterAction,int
+41,OrigClOrdID,long long
+125,CxlType,enum
+102,CxlRejReason,enum
+1311,CurrentQty,int
+1312,TradableQty,int
+1313,ShortQty,int
+1321,EnableBalance,double
+1322,CreditBalance,double
+1332,ModuleStatus,enum
+49,SenderCompID,int
+61,Urgency,enum
+148,Headline,char[_NCHAR_Headline]
+58,Text,char[_NCHAR_Text]

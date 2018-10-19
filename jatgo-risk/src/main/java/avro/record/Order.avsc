@@ -1,0 +1,117 @@
+[
+    {
+        "namespace": "com.kafang.atgo.memory.avro.record",
+        "type": "record",
+        "name": "Order",
+        "fields": [
+            {
+                "name": "sendingTime",
+                "type": "long"
+            },
+            {
+                "name": "transactTime",
+                "type": "long"
+            },
+            {
+            	"name": "localTimestamp",
+                "type": "long"
+            },
+            {
+                "name": "clOrdId",
+                "type": "long"
+            },
+            {
+                "name": "strategyId",
+                "type": "int"
+            },
+            {
+                "name": "clientId",
+                "type": "int"
+            },
+            {
+                "name": "accountId",
+                "type": "int"
+            },
+            {
+                "name": "handlInst",
+                "type": "int"
+            },
+            {
+                "name": "quoteId",
+                "type": "long"
+            },
+            {
+                "name": "instrumentId",
+                "type": "int"
+            },
+            {
+                "name": "symbol",
+                "type": "int"
+            },
+            {
+                "name": "securityType",
+                "type": "int"
+            },
+            {
+                "name": "securityExchange",
+                "type": "int"
+            },
+            {
+                "name": "side",
+                "type": "int"
+            },
+            {
+                "name": "orderQty",
+                "type": "int"
+            },
+            {
+                "name": "ordType",
+                "type": "int"
+            },
+            {
+                "name": "price",
+                "type": "double"
+            },
+            {
+                "name": "effectiveTime",
+                "type": "long"
+            },
+            {
+                "name": "expireTime",
+                "type": "long"
+            },
+            {
+                "name": "execId",
+                "type": "string"
+            },
+            {
+                "name": "orderId",
+                "type": "string"
+            },
+            {
+                "name": "cumQty",
+                "type": "int"
+            },
+            {
+                "name": "leavesQty",
+                "type": "int"
+            },
+            {
+                "name": "avgPrice",
+                "type": "double"
+            },
+            {
+                "name": "ordStatus",
+                "type": "int"
+            },
+            {
+                "name": "limitAction",
+                "type": "int"
+            },
+            {
+                "name": "afterAction",
+                "type": "int"
+            }
+        ]
+    }
+]

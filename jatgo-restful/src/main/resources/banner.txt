@@ -1,0 +1,11 @@
+${AnsiColor.BRIGHT_RED}
+      _      _      _____    ____    ___
+     | |    / \    |_   _|  / ___|  / _ \
+  _  | |   / _ \     | |   | |  _  | | | |
+ | |_| |  / ___ \    | |   | |_| | | |_| |
+  \___/  /_/   \_\   |_|    \____|  \___/
+
+${AnsiColor.BRIGHT_RED}
+${AnsiBackground.BRIGHT_BLACK}
+spring-boot version:${spring-boot.formatted-version}
+Jatgo version: ${jatgo.version}

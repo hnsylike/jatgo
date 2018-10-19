@@ -1,0 +1,56 @@
+package com.kafang.atgo.bean.fix;
+
+import java.time.LocalDateTime;
+
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.MutableMap;
+
+import com.kafang.atgo.bean.fix.base.BaseFixBean;
+import com.kafang.atgo.bean.fix.base.FixMessage;
+import com.kafang.atgo.bean.fix.base.FixMessageAnalysisException;
+import com.kafang.atgo.bean.fix.field.FixHeartbeatField;
+import com.kafang.atgo.bean.fix.field.collect.FixFieldLists;
+
+public class FixHeartbeat extends BaseFixBean<FixHeartbeatField> {
+
+	private LocalDateTime sendingTime;
+	private LocalDateTime transactTime;
+
+	public FixHeartbeat(FixMessage fixMessage) throws FixMessageAnalysisException {
+		super(fixMessage);
+	}
+
+	public LocalDateTime getSendingTime() {
+		return sendingTime;
+	}
+
+	public FixHeartbeat setSendingTime(LocalDateTime sendingTime) {
+		this.sendingTime = sendingTime;
+		return this;
+	}
+
+	public LocalDateTime getTransactTime() {
+		return transactTime;
+	}
+
+	public FixHeartbeat setTransactTime(LocalDateTime transactTime) {
+		this.transactTime = transactTime;
+		return this;
+	}
+
+	@Override
+	public ImmutableList<FixHeartbeatField> getFixFields() {
+		return FixFieldLists.FixHeartbeatFields;
+	}
+
+	@Override
+	protected void setAttributes() {
+
+	}
+
+	@Override
+	protected MutableMap<FixHeartbeatField, Object> attributesToMap() {
+		return null;
+	}
+
+}

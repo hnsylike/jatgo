@@ -1,0 +1,11 @@
+server.port=7777
+
+mq.host = localhost
+mq.port = 5672
+mq.username = guest
+mq.password = guest
+mq.web.bizqueue = BIZ_WEBSERVER
+
+atgo.token.enable=true
+
+#atgo.db.url=jdbc:mysql://localhost:3306/ATGO_TEST?user=atgo_test&password=123456&useSSL=false&characterEncoding=utf-8

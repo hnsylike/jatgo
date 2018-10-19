@@ -1,0 +1,97 @@
+package com.kafang.atgo.bean.fix;
+
+import java.time.LocalDateTime;
+
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.MutableMap;
+
+import com.kafang.atgo.bean.fix.base.BaseFixBean;
+import com.kafang.atgo.bean.fix.base.FixMessage;
+import com.kafang.atgo.bean.fix.base.FixMessageAnalysisException;
+import com.kafang.atgo.bean.fix.enums.MsgType;
+import com.kafang.atgo.bean.fix.field.FixBalanceField;
+import com.kafang.atgo.bean.fix.field.collect.FixFieldLists;
+
+public final class FixBalance extends BaseFixBean<FixBalanceField> {
+
+	private LocalDateTime sendingTime;
+	private int clientId;
+	private LocalDateTime transactTime;
+	private double enableBalance;
+	private double creditBalance;
+
+	public FixBalance() {
+		super(MsgType.ReportBalance);
+	}
+
+	public FixBalance(FixMessage message) throws FixMessageAnalysisException {
+		super(message);
+	}
+
+	public LocalDateTime getSendingTime() {
+		return sendingTime;
+	}
+
+	public FixBalance setSendingTime(LocalDateTime sendingTime) {
+		this.sendingTime = sendingTime;
+		return this;
+	}
+
+	public int getClientId() {
+		return clientId;
+	}
+
+	public FixBalance setClientId(int clientId) {
+		this.clientId = clientId;
+		return this;
+	}
+
+	public LocalDateTime getTransactTime() {
+		return transactTime;
+	}
+
+	public FixBalance setTransactTime(LocalDateTime transactTime) {
+		this.transactTime = transactTime;
+		return this;
+	}
+
+	public double getEnableBalance() {
+		return enableBalance;
+	}
+
+	public FixBalance setEnableBalance(double enableBalance) {
+		this.enableBalance = enableBalance;
+		return this;
+	}
+
+	public double getCreditBalance() {
+		return creditBalance;
+	}
+
+	public FixBalance setCreditBalance(double creditBalance) {
+		this.creditBalance = creditBalance;
+		return this;
+	}
+
+	@Override
+	public ImmutableList<FixBalanceField> getFixFields() {
+		return FixFieldLists.FixBalanceFields;
+	}
+
+	@Override
+	protected void setAttributes() {
+
+
+	}
+
+	@Override
+	protected MutableMap<FixBalanceField, Object> attributesToMap() {
+
+		return null;
+	}
+
+	public static void main(String[] args) {
+
+	}
+
+}

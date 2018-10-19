@@ -1,0 +1,6 @@
+com\kafang\atgo\db\config\MyFlywayInitializer.class
+com\kafang\atgo\db\FlywayApplication.class
+com\kafang\atgo\db\FlywayCommand.class
+com\kafang\atgo\db\Upgrade.class
+com\kafang\atgo\db\Upgrade$1.class
+com\kafang\atgo\db\config\FlywayConfiguration.class

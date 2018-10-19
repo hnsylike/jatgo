@@ -1,0 +1,28 @@
+package com.kafang.atgo.risk.validators;
+
+import org.eclipse.collections.api.set.MutableSet;
+
+import com.kafang.atgo.bean.fix.FixOrder;
+import com.kafang.atgo.memory.avro.record.Order;
+import com.kafang.atgo.memory.utils.InstrumentIdHelper;
+import com.kafang.atgo.risk.base.BaseRiskValidator;
+import com.kafang.atgo.risk.config.NewOrderFrequencyConfig;
+
+public class NewOrderHighFrequencyValidator extends BaseRiskValidator<FixOrder> {
+
+	@Override
+	public boolean validationOrder(FixOrder inOrder) {
+		MutableSet<Order> orders4Client = orderStorage
+				.getOrders4Client(accountManager.getClientId(inOrder.getAccountId()));
+		MutableSet<NewOrderFrequencyConfig> resendConfig = newOrderFrequencyConfigComponent.getNewOrderFrequencyConfig(
+				InstrumentIdHelper.getInstrumentId(inOrder.getSecurityExchange(), inOrder.getSymbol()));
+
+		return false;
+	}
+
+	@Override
+	public String getValidatorName() {
+		return this.getClass().getSimpleName();
+	}
+
+}

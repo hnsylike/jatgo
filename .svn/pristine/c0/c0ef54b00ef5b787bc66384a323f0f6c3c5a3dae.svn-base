@@ -1,0 +1,173 @@
+package com.kafang.atgo.bean.fix.base;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import org.eclipse.collections.api.map.MutableMap;
+import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
+import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
+import org.eclipse.collections.impl.map.mutable.UnifiedMap;
+import org.eclipse.collections.impl.map.mutable.primitive.IntObjectHashMap;
+
+import com.kafang.atgo.bean.fix.enums.MsgType;
+
+import io.ffreedom.common.charset.AsciiCharacter;
+import io.ffreedom.common.datetime.DateTimeUtil;
+
+public abstract class BaseFixBean<K extends FixField> implements FixBean<K> {
+
+	private MsgType msgType;
+
+	private MutableIntObjectMap<Optional<Object>> intObjectMap = new IntObjectHashMap<>();
+
+	protected BaseFixBean(MsgType msgType) {
+		this.msgType = msgType;
+	}
+
+	protected BaseFixBean(FixMessage fixMessage) throws FixMessageAnalysisException {
+		this(fixMessage.getMsgType(), fixMessage);
+	}
+
+	protected BaseFixBean(MsgType msgType, FixMessage fixMessage) throws FixMessageAnalysisException {
+		if (msgType == null) {
+			throw new IllegalArgumentException("msgType Not allowed to be null.");
+		}
+		this.msgType = msgType;
+		if (fixMessage != null) {
+			fromFixMessage(fixMessage);
+		}
+	}
+
+	public MsgType getMsgType() {
+		return msgType;
+	}
+
+	@Override
+	public void fromFixMessage(FixMessage fixMessage) throws FixMessageAnalysisException {
+		try {
+			ImmutableIntObjectMap<String> fixFieldsMap = fixMessage.getFixFieldsMap();
+			for (K field : getFixFields()) {
+				GeneralFixField fixField = field.getGeneralFixField();
+				int tag = fixField.tag();
+				FixFieldType type = fixField.type();
+				if (fixFieldsMap.containsKey(tag)) {
+					switch (type) {
+					case INT:
+						intObjectMap.put(tag, Optional.of(Integer.parseInt(fixFieldsMap.get(tag))));
+						break;
+					case DOUBLE:
+						intObjectMap.put(tag, Optional.of(Double.parseDouble(fixFieldsMap.get(tag))));
+						break;
+					case STRING:
+						intObjectMap.put(tag, Optional.of(fixFieldsMap.get(tag)));
+						break;
+					case CHAR:
+						intObjectMap.put(tag, Optional.of(fixFieldsMap.get(tag).charAt(0)));
+						break;
+					case DATETIME:
+						intObjectMap.put(tag,
+								Optional.of(DateTimeUtil.toLocalDateTime(Long.parseLong(fixFieldsMap.get(tag)))));
+						break;
+					case LONG:
+						intObjectMap.put(tag, Optional.of(Long.parseLong(fixFieldsMap.get(tag))));
+						break;
+					default:
+					}
+				} else {
+					intObjectMap.put(tag, Optional.empty());
+				}
+			}
+			setAttributes();
+		} catch (Exception e) {
+			throw new FixMessageAnalysisException(e.getMessage(), e);
+		}
+	}
+
+//	@Override
+//	public String toFixMessage() {
+//		Message message = new Message();
+//		MutableMap<K, Object> attributesMap = attributesToMap();
+//		for(K key : attributesMap.keySet()) {
+//			GeneralFixField fixField = key.getGeneralFixField();
+//			int tag = fixField.tag();
+//			FixFieldType type = fixField.type();
+//			switch (type) {
+//			case INT:
+//				message.setInt(tag, (int) attributesMap.get(key));
+//				break;
+//			case DOUBLE:
+//				message.setDouble(tag, (double) attributesMap.get(key));
+//				break;
+//			case STRING:
+//				message.setString(tag, (String) attributesMap.get(key));
+//				break;
+//			case CHAR:
+//				message.setChar(tag, (char) attributesMap.get(key));
+//				break;
+//			case DATETIME:
+//				message.setString(tag,
+//						Long.toString(DateTimeUtil.datetimeToMillisecond((LocalDateTime) attributesMap.get(key))));
+//				break;
+//			case LONG:
+//				message.setString(tag, String.valueOf((long) attributesMap.get(key)));
+//				break;
+//			default:
+//			}
+//		}
+//		return message.toString();
+//	}
+
+	@Override
+	public String toFixMessage() throws FixBeanLegalityException {
+		StringBuilder fixMessage = new StringBuilder();
+		try {
+			MutableMap<K, Object> attributesMap = attributesToMap();
+			fixMessage.append(GeneralFixFields.FixField_MsgType.tag() + "=" + msgType.code() + AsciiCharacter.SOH);
+			for (K key : attributesMap.keySet()) {
+				GeneralFixField fixField = key.getGeneralFixField();
+				switch (fixField.type()) {
+				case CHAR:
+				case INT:
+				case LONG:
+				case DOUBLE:
+					fixMessage.append(fixField.tag());
+					fixMessage.append("=");
+					fixMessage.append(attributesMap.get(key));
+					break;
+				case STRING:
+					if (attributesMap.get(key) != null) {
+						fixMessage.append(fixField.tag());
+						fixMessage.append("=");
+						fixMessage.append(attributesMap.get(key));
+					}
+					break;
+				case DATETIME:
+					if (attributesMap.get(key) != null) {
+						fixMessage.append(fixField.tag());
+						fixMessage.append("=");
+						fixMessage.append(DateTimeUtil.datetimeToMillisecond((LocalDateTime) attributesMap.get(key)));
+					}
+					break;
+				default:
+				}
+				fixMessage.append(AsciiCharacter.SOH);
+			}
+		} catch (Exception e) {
+			throw new FixBeanLegalityException(e);
+		}
+		return fixMessage.toString();
+	}
+
+	protected abstract void setAttributes();
+
+	protected abstract MutableMap<K, Object> attributesToMap();
+
+	protected MutableMap<K, Object> newMap() {
+		return new UnifiedMap<>();
+	}
+
+	protected Optional<Object> getValue(K k) {
+		return intObjectMap.get(k.getGeneralFixField().tag());
+	}
+
+}

@@ -1,0 +1,73 @@
+membTag,membName,membType,dftValue
+35,MsgType,std::string,NA
+52,SendingTime,long long,0
+60,TransactTime,long long,0
+1360,ProcessID,enum,INVALID
+55,Symbol,int,0
+167,SecurityType,enum,INVALID
+207,SecurityExchange,enum,INVALID
+140,PrevClosePx,double,0
+1403,UpPx,double,0
+1404,DownPx,double,0
+1405,TickSize,int,0
+1406,LotSize,int,0
+1407,SpecTreat,enum,Normal
+336,TradingSession,enum,Break
+387,TotalVolumeTraded,long long,0
+1401,TotalAmtTraded,double,0
+31,LastPx,double,0
+332,HighPx,double,0
+333,LowPx,double,0
+1402,OpenPx,double,0
+1501,BidPrice1,double,NA
+1502,BidPrice2,double,NA
+1503,BidPrice3,double,NA
+1504,BidPrice4,double,NA
+1505,BidPrice5,double,NA
+1601,AskPrice1,double,NA
+1602,AskPrice2,double,NA
+1603,AskPrice3,double,NA
+1604,AskPrice4,double,NA
+1605,AskPrice5,double,NA
+1701,BidVolume1,long long,NA
+1702,BidVolume2,long long,NA
+1703,BidVolume3,long long,NA
+1704,BidVolume4,long long,NA
+1705,BidVolume5,long long,NA
+1801,AskVolume1,long long,NA
+1802,AskVolume2,long long,NA
+1803,AskVolume3,long long,NA
+1804,AskVolume4,long long,NA
+1805,AskVolume5,long long,NA
+11,ClOrdID,long long,-1
+109,ClientID,int,-1
+1340,AccountID,int,-1
+21,HandlInst,enum,INVALID
+117,QuoteID,long long,-1
+54,Side,enum,INVALID
+38,OrderQty,int,0
+40,OrdType,enum,INVALID
+44,Price,double,0
+168,EffectiveTime,long long,0
+126,ExpireTime,long long,0
+17,ExecID,long long,0
+37,OrderID,std::string,
+14,CumQty,int,0
+151,LeavesQty,int,0
+6,AvgPx,double,0
+39,OrdStatus,enum,PendingNew
+1410,LimitAction,int,0
+1411,AfterAction,int,1
+41,OrigClOrdID,long long,-1
+125,CxlType,enum,NotCanceled
+102,CxlRejReason,enum,INVALID
+1311,CurrentQty,int,0
+1312,TradableQty,int,0
+1313,ShortQty,int,0
+1321,EnableBalance,double,0
+1322,CreditBalance,double,0
+1332,ModuleStatus,enum,Offline
+49,SenderCompID,int,0
+61,Urgency,enum,Debug
+148,Headline,std::string,
+58,Text,std::string,

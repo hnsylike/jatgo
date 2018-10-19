@@ -1,0 +1,45 @@
+package com.kafang.atgo.restful.bean.req;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.time.LocalDateTime;
+
+/**
+ * @author like
+ * @description 委托订单返回bean
+ * @data 2018/10/15
+ */
+@Getter
+@Setter
+@ToString
+public class OrderResponse {
+
+    private LocalDateTime sendingTime;
+    private long clOrdId;
+    private int clientId;
+    private int accountId;
+    private int handlInst;
+    private long quoteId;
+    private int symbol;
+    private int securityType;
+    private int securityExchange;
+    private int side;
+    private LocalDateTime transactTime;
+    private int orderQty;
+    private int ordType;
+    private double price;
+    private LocalDateTime effectiveTime;
+    private LocalDateTime expireTime;
+    private long execId;
+    private String orderId;
+    private int cumQty;
+    private int leavesQty;
+    private double avgPx;
+    private int ordStatus;
+    private int limitAction;
+    private int afterAction;
+    private String text;
+
+}

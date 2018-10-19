@@ -1,0 +1,146 @@
+package com.kafang.atgo.bean.fix;
+
+import java.time.LocalDateTime;
+
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.MutableMap;
+
+import com.kafang.atgo.bean.fix.base.BaseFixBean;
+import com.kafang.atgo.bean.fix.base.FixMessage;
+import com.kafang.atgo.bean.fix.base.FixMessageAnalysisException;
+import com.kafang.atgo.bean.fix.field.FixInstrumentInfoField;
+import com.kafang.atgo.bean.fix.field.collect.FixFieldLists;
+
+public class FixInstrumentInfo extends BaseFixBean<FixInstrumentInfoField> {
+
+	private LocalDateTime sendingTime;
+	private int symbol;
+	private int securityType;
+	private int securityExchange;
+	private LocalDateTime transactTime;
+	private double prevClosePx;
+	private double upPx;
+	private double downPx;
+	private double tickSize;
+	private int lotSize;
+	private int specTreat;
+
+	public FixInstrumentInfo(FixMessage fixMessage) throws FixMessageAnalysisException {
+		super(fixMessage);
+	}
+
+	public LocalDateTime getSendingTime() {
+		return sendingTime;
+	}
+
+	public FixInstrumentInfo setSendingTime(LocalDateTime sendingTime) {
+		this.sendingTime = sendingTime;
+		return this;
+	}
+
+	public int getSymbol() {
+		return symbol;
+	}
+
+	public FixInstrumentInfo setSymbol(int symbol) {
+		this.symbol = symbol;
+		return this;
+	}
+
+	public int getSecurityType() {
+		return securityType;
+	}
+
+	public FixInstrumentInfo setSecurityType(int securityType) {
+		this.securityType = securityType;
+		return this;
+	}
+
+	public int getSecurityExchange() {
+		return securityExchange;
+	}
+
+	public FixInstrumentInfo setSecurityExchange(int securityExchange) {
+		this.securityExchange = securityExchange;
+		return this;
+	}
+
+	public LocalDateTime getTransactTime() {
+		return transactTime;
+	}
+
+	public FixInstrumentInfo setTransactTime(LocalDateTime transactTime) {
+		this.transactTime = transactTime;
+		return this;
+	}
+
+	public double getPrevClosePx() {
+		return prevClosePx;
+	}
+
+	public FixInstrumentInfo setPrevClosePx(double prevClosePx) {
+		this.prevClosePx = prevClosePx;
+		return this;
+	}
+
+	public double getUpPx() {
+		return upPx;
+	}
+
+	public FixInstrumentInfo setUpPx(double upPx) {
+		this.upPx = upPx;
+		return this;
+	}
+
+	public double getDownPx() {
+		return downPx;
+	}
+
+	public FixInstrumentInfo setDownPx(double downPx) {
+		this.downPx = downPx;
+		return this;
+	}
+
+	public double getTickSize() {
+		return tickSize;
+	}
+
+	public FixInstrumentInfo setTickSize(double tickSize) {
+		this.tickSize = tickSize;
+		return this;
+	}
+
+	public int getLotSize() {
+		return lotSize;
+	}
+
+	public FixInstrumentInfo setLotSize(int lotSize) {
+		this.lotSize = lotSize;
+		return this;
+	}
+
+	public int getSpecTreat() {
+		return specTreat;
+	}
+
+	public FixInstrumentInfo setSpecTreat(int specTreat) {
+		this.specTreat = specTreat;
+		return this;
+	}
+
+	@Override
+	public ImmutableList<FixInstrumentInfoField> getFixFields() {
+		return FixFieldLists.FixInstrumentInfoFields;
+	}
+
+	@Override
+	protected void setAttributes() {
+
+	}
+
+	@Override
+	protected MutableMap<FixInstrumentInfoField, Object> attributesToMap() {
+
+		return null;
+	}
+}

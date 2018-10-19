@@ -1,0 +1,41 @@
+[
+    {
+        "namespace": "com.kafang.atgo.memory.avro.record",
+        "type": "record",
+        "name": "Position",
+        "fields": [
+        	{
+                "name": "strategyId",
+                "type": "int"
+            },
+            {
+                "name": "clientId",
+                "type": "int"
+            },
+        	{
+                "name": "accountId",
+                "type": "int"
+            },
+            {
+                "name": "instrumentId",
+                "type": "int"
+            },
+            {
+                "name": "currentQty",
+                "type": "int"
+            },
+            {
+                "name": "tradableQty",
+                "type": "int"
+            },
+            {
+                "name": "shortQty",
+                "type": "int"
+            },
+            {
+                "name": "lockQty",
+                "type": "int"
+            }
+        ]
+    }
+]

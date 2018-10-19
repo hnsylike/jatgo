@@ -1,0 +1,49 @@
+package com.kafang.atgo.bean.fix.base;
+
+import org.eclipse.collections.api.map.primitive.ImmutableIntObjectMap;
+import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
+import org.eclipse.collections.impl.map.mutable.primitive.IntObjectHashMap;
+
+import com.kafang.atgo.bean.fix.enums.MsgType;
+
+import io.ffreedom.common.charset.AsciiCharacter;
+
+public class FixMessage {
+
+	private MsgType msgType;
+	private ImmutableIntObjectMap<String> fixFieldsMap;
+
+	public FixMessage(String fixString) {
+		this.fixFieldsMap = analysisFixString(fixString).toImmutable();
+	}
+
+	public MsgType getMsgType() {
+		return msgType;
+	}
+
+	public ImmutableIntObjectMap<String> getFixFieldsMap() {
+		return fixFieldsMap;
+	}
+
+	private MutableIntObjectMap<String> analysisFixString(String fixMessage) {
+        String[] fields = fixMessage.split(AsciiCharacter.SOH);
+        MutableIntObjectMap<String> map = IntObjectHashMap.newMap();
+        for (String field : fields) {
+            String[] keyValue = field.split("=");
+            if (keyValue.length == 2) {
+                int tag = Integer.parseInt(keyValue[0]);
+                if (tag == GeneralFixFields.FixField_MsgType.tag()) {
+                    this.msgType = MsgType.checkout(keyValue[1]);
+                } else {
+                    map.put(tag, keyValue[1]);
+                }
+            }
+        }
+        return map;
+	}
+
+	public String getFixFieldValue(GeneralFixField fixField) {
+		return fixFieldsMap.containsKey(fixField.tag()) ? fixFieldsMap.get(fixField.tag()) : "";
+	}
+
+}

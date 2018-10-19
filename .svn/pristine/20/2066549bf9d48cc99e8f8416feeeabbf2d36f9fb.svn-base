@@ -1,0 +1,11 @@
+package com.kafang.atgo.backup;
+
+public interface LoadOrder {
+
+    int FIRST = Integer.MIN_VALUE;
+
+    int SECOND = FIRST + 1;
+
+    int LAST = Integer.MAX_VALUE;
+
+}

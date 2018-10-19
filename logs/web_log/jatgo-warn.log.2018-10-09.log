@@ -1,0 +1,2 @@
+[34m2018-10-09 18:14:24.214[0;39m [[36mAMQP Connection 0:0:0:0:0:0:0:1:5672[0;39m] [[33mcom.rabbitmq.client.impl.ForgivingExceptionHandler[0;39m]-[[31mWARN[0;39m] An unexpected connection driver error occured (Exception message: Connection reset)
+[34m2018-10-09 18:14:24.214[0;39m [[36mAMQP Connection 0:0:0:0:0:0:0:1:5672[0;39m] [[33mcom.rabbitmq.client.impl.ForgivingExceptionHandler[0;39m]-[[31mWARN[0;39m] An unexpected connection driver error occured (Exception message: Connection reset)

@@ -1,0 +1,21 @@
+package com.kafang.atgo.install.db.util;
+
+import com.kafang.atgo.persistence.factory.ConnectionFactory;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+public class GenerateTable {
+
+    public static void main(String[] args) {
+        String dbUrl = "";
+        ConnectionFactory connectionFactory = new ConnectionFactory(dbUrl, 10);
+
+//            TableUtils.createTable(connectionFactory.getConnectionSource(), BakMessage.class);
+
+
+        connectionFactory.closeConnection();
+
+
+    }
+
+}

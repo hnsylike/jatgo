@@ -1,0 +1,25 @@
+package com.kafang.atgo.bean.fix.enums;
+
+import com.kafang.atgo.bean.fix.base.FixEnum;
+
+public enum AfterAction implements FixEnum{
+
+	No(0),
+
+	Yes(1),
+
+	Invalid(-1),
+
+	;
+
+	private int code;
+
+	private AfterAction(int code) {
+		this.code = code;
+	}
+
+	public int code() {
+		return code;
+	}
+
+}

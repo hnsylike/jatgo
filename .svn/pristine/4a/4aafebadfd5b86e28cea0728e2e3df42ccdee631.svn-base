@@ -1,0 +1,51 @@
+package com.kafang.atgo.bean.fix;
+
+import com.kafang.atgo.bean.fix.enums.MsgType;
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.MutableMap;
+
+import com.kafang.atgo.bean.fix.base.BaseFixBean;
+import com.kafang.atgo.bean.fix.base.FixMessage;
+import com.kafang.atgo.bean.fix.base.FixMessageAnalysisException;
+import com.kafang.atgo.bean.fix.field.FixResendRequestField;
+import com.kafang.atgo.bean.fix.field.collect.FixFieldLists;
+
+public class FixResendRequest extends BaseFixBean<FixResendRequestField> {
+
+	private int processId;
+
+	public FixResendRequest() {
+		super(MsgType.ResendRequest);
+	}
+
+	public FixResendRequest(FixMessage message) throws FixMessageAnalysisException {
+		super(message);
+	}
+
+	public int getProcessId() {
+		return processId;
+	}
+
+	public FixResendRequest setProcessId(int processId) {
+		this.processId = processId;
+		return this;
+	}
+
+	@Override
+	public ImmutableList<FixResendRequestField> getFixFields() {
+		return FixFieldLists.FixResendRequestFields;
+	}
+
+	@Override
+	protected void setAttributes() {
+//		setMsgType(getValue(FixResendRequestField.MsgType));
+//		setProcessId(getValue(FixResendRequestField.ProcessID));
+	}
+
+	@Override
+	protected MutableMap<FixResendRequestField, Object> attributesToMap() {
+
+		return null;
+	}
+
+}

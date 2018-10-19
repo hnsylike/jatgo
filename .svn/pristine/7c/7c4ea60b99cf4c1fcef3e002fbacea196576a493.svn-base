@@ -1,0 +1,17 @@
+package com.kafang.atgo;
+
+public final class RpcServiceBoot {
+
+	public static void main(String[] args) {
+
+//		Responder responder = new SpecificResponder(QueryServiceProtocol.class, new QueryServiceProtocolImpl());
+//
+//		Server server = new NettyServer(responder, new InetSocketAddress(61000));
+//
+//		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+//			server.close();
+//		}));
+
+	}
+
+}

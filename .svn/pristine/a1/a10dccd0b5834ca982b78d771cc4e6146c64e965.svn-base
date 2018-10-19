@@ -1,0 +1,55 @@
+package com.kafang.atgo.restful.service.impl;
+
+import com.kafang.atgo.restful.dao.api.AgClientDao;
+import com.kafang.atgo.restful.dao.api.WsUserCustomerMpDao;
+import com.kafang.atgo.restful.entity.AgClient;
+import com.kafang.atgo.restful.entity.WsUserCustomerMp;
+import com.kafang.atgo.restful.service.api.AgClientService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class AgClientServiceImpl implements AgClientService {
+
+	@Autowired
+	private AgClientDao wsDao;
+
+	@Autowired
+	private WsUserCustomerMpDao wsUserCustomerMpDao;
+
+	@Override
+	public AgClient getId(int customerId) {
+		return  wsDao.selectById(customerId).orElse(null);
+	}
+
+	@Override
+	public List<AgClient> getCustomerId(long userId) {
+		return wsDao.selectByCustomer(userId).orElse(Collections.emptyList());
+	}
+
+	@Override
+	public List<AgClient> getUserId(long userId) {
+		Optional<WsUserCustomerMp> optional=wsUserCustomerMpDao.selectByUserId(userId);
+		if(!optional.isPresent()){
+			return Collections.emptyList();
+		}
+		WsUserCustomerMp wsUserCustomerMp=optional.get();
+		return wsDao.selectByCustomer(wsUserCustomerMp.getCustomerId()).orElse(Collections.emptyList());
+	}
+
+	@Override
+	public int insert(AgClient agClient) {
+		return wsDao.insert(agClient);
+	}
+
+	@Override
+	public String selectid() {
+		return wsDao.selectid();
+	}
+
+
+}

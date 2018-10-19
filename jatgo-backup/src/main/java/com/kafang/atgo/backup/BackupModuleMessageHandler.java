@@ -1,0 +1,67 @@
+package com.kafang.atgo.backup;
+
+import java.time.LocalDateTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.kafang.atgo.backup.resend.ResendWorker;
+import com.kafang.atgo.backup.service.BackupService;
+import com.kafang.atgo.bean.fix.FixResendRequest;
+import com.kafang.atgo.bean.fix.base.FixMessage;
+import com.kafang.atgo.bean.fix.base.FixMessageAnalysisException;
+import com.kafang.atgo.bean.fix.base.GeneralFixFields;
+import com.kafang.atgo.bean.fix.enums.HandlInst;
+import com.kafang.atgo.bean.fix.enums.MsgType;
+
+import io.ffreedom.common.log.UseLogger;
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+public class BackupModuleMessageHandler {
+
+	@Autowired
+	private BackupService backupService;
+
+	@Autowired
+	private ResendWorker resendWorker;
+
+	public void onMessage(String msgString) {
+		FixMessage fixMessage = new FixMessage(msgString);
+		MsgType msgType = fixMessage.getMsgType();
+		switch (fixMessage.getMsgType()) {
+		case Order:
+		case OrderReport:
+		case CancelOrder:
+		case CancelOrderReport:
+			int handlInst = Integer.parseInt(fixMessage.getFixFieldValue(GeneralFixFields.FixField_HandlInst));
+			log.info("MessageHandler received Order&OrderReport :[{}]", msgString, LocalDateTime.now());
+			backupService.saveBakMessage(LocalDateTime.now(), msgType.code(), handlInst, msgString);
+			break;
+		case InstrumentInfo:
+		case ReportBalance:
+		case ReportPosition:
+		case ReportStatus:
+			log.info("MessageHandler received Message :[{}]", msgString);
+			backupService.saveBakMessage(LocalDateTime.now(), msgType.code(), HandlInst.Invalid.code(), msgString);
+			break;
+		case ResendRequest:
+			log.info("MessageHandler received ResendRequest :[{}]", msgString);
+			backupService.saveBakMessage(LocalDateTime.now(), msgType.code(), HandlInst.Invalid.code(), msgString);
+			try {
+				FixResendRequest request = new FixResendRequest(fixMessage);
+				resendWorker.resendMessage(request);
+			} catch (FixMessageAnalysisException e) {
+				UseLogger.error(log, e, "Call method onMessage(msgString==[{}]) throw FixMessageAnalysisException -> {}",
+						msgString, e.getMessage());
+			}
+			break;
+		default:
+			log.info("");
+			break;
+		}
+
+	}
+
+}

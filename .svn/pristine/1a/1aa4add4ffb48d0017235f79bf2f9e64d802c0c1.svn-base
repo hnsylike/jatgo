@@ -1,0 +1,68 @@
+package com.kafang.atgo.restful.unit_test;
+
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.NotBlank;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import javax.validation.constraints.Min;
+import java.util.Properties;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+
+/**
+ * @author xuejian.sun
+ */
+@Slf4j
+@RunWith(MockitoJUnitRunner.class)
+public class MockitoTest {
+
+    @Test
+    public void testDoReturnWhen(){
+        Properties properties = mock(Properties.class);
+
+        doReturn("x").when(properties).get("ax");
+
+        assertEquals("x",properties.get("ax"));
+    }
+
+    @Test
+    public void validate(){
+//        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+//        Demo demo = new Demo("3",2);
+//        Set<ConstraintViolation<Demo>> validate = validator.validate(demo);
+//        for(ConstraintViolation constraintViolation : validate){
+//            throw new AtgoException(AtgoErrorCode.VALIDATION_ERROR,constraintViolation.getMessage());
+//        }
+//        AtgoValidator.initialize(demo).allError().forEach(System.out::println);
+//        AtgoValidator.initialize(demo).throwFirstError();
+//        throw new AtgoException(AtgoErrorCode.OTHER_ERROR,"null exception");
+//        try {
+//            int i = 1 / 0;
+//
+//        }catch (Exception e){
+////            log.error("{}",e);
+//            log.error("{}",e);
+////            throw new AtgoException(AtgoErrorCode.VALIDATION_ERROR,e);
+//        }
+    }
+
+    @Data
+    public static class Demo{
+        @NotBlank
+        private String str;
+
+        @Min(3)
+        private int num;
+
+        public Demo(String str,int num) {
+            this.str = str;
+            this.num = num;
+        }
+    }
+
+}

@@ -1,0 +1,76 @@
+package com.kafang.atgo.bean.fix.field;
+
+import com.kafang.atgo.bean.fix.base.FixField;
+import com.kafang.atgo.bean.fix.base.GeneralFixField;
+import com.kafang.atgo.bean.fix.base.GeneralFixFields;
+
+public enum FixOrderField implements FixField {
+
+	MsgType(GeneralFixFields.FixField_MsgType),
+
+	SendingTime(GeneralFixFields.FixField_SendingTime),
+
+	TransactTime(GeneralFixFields.FixField_TransactTime),
+
+	ClOrdID(GeneralFixFields.FixField_ClOrdID),
+
+	ClientID(GeneralFixFields.FixField_ClientID),
+
+	AccountID(GeneralFixFields.FixField_AccountID),
+
+	HandlInst(GeneralFixFields.FixField_HandlInst),
+
+	QuoteID(GeneralFixFields.FixField_QuoteID),
+
+	Symbol(GeneralFixFields.FixField_Symbol),
+
+	SecurityType(GeneralFixFields.FixField_SecurityType),
+
+	SecurityExchange(GeneralFixFields.FixField_SecurityExchange),
+
+	Side(GeneralFixFields.FixField_Side),
+
+	OrderQty(GeneralFixFields.FixField_OrderQty),
+
+	OrdType(GeneralFixFields.FixField_OrdType),
+
+	Price(GeneralFixFields.FixField_Price),
+
+	EffectiveTime(GeneralFixFields.FixField_EffectiveTime),
+
+	ExpireTime(GeneralFixFields.FixField_ExpireTime),
+
+	ExecID(GeneralFixFields.FixField_ExecID),
+
+	OrderID(GeneralFixFields.FixField_OrderID),
+
+	CumQty(GeneralFixFields.FixField_CumQty),
+
+	LeavesQty(GeneralFixFields.FixField_LeavesQty),
+
+	OutstandingQty(GeneralFixFields.FixField_OutstandingQty),
+
+	AvgPx(GeneralFixFields.FixField_AvgPx),
+
+	OrdStatus(GeneralFixFields.FixField_OrdStatus),
+
+	LimitAction(GeneralFixFields.FixField_LimitAction),
+
+	AfterAction(GeneralFixFields.FixField_AfterAction),
+
+	Text(GeneralFixFields.FixField_Text),
+
+	;
+
+	private GeneralFixField generalFixField;
+
+	private FixOrderField(GeneralFixField generalFixField) {
+		this.generalFixField = generalFixField;
+	}
+
+	@Override
+	public GeneralFixField getGeneralFixField() {
+		return generalFixField;
+	}
+
+}

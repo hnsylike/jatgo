@@ -1,0 +1,128 @@
+package com.kafang.atgo.restful.entity;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+/**
+ * 结算报表-子单
+ * @author Administrator
+ *
+ */
+@Getter
+@Setter
+@ToString
+@Entity(name="RPT_ACTUAL")
+public class RptActual {
+	
+	public interface TableColumn {
+		String ID="ID";
+		String AsOfDate="AsOfDate";
+		String CustomerID="CustomerID";
+		String CustomerName="CustomerName";
+		String ClientID="ClientID";
+		String ClientName="ClientName";
+		String StrategyID="StrategyID";
+		String StrategyName="StrategyName";
+		String AccountID="AccountID";
+		String QuoteID="QuoteID";
+		String ClOrdID="ClOrdID";
+		String OrderID="OrderID";
+		String Symbol="Symbol";
+		String SecurityType="SecurityType";
+		String SecurityExchange="SecurityExchange";
+		String Side="Side";
+		String OrderTime="OrderTime";
+		String OrderQty="OrderQty";
+		String OrdType="OrdType";
+		String Price="Price";
+		String CumQty="CumQty";
+		String CanceledQty="CanceledQty";
+		String AvgPx="AvgPx";
+		String Fee="Fee";
+	}
+	
+	@Id
+	@Column(name="ID")			
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long ID;
+	
+	@Column(name = "AsOfDate", nullable = true)
+	private Date  AsOfDate;//日期
+
+	@Column(name = "CustomerID", length = 200, nullable = true)
+	private int CustomerID;//客户编号
+		
+	@Column(name = "CustomerName", length = 255, nullable = true)
+	private String CustomerName;//客户名称
+
+	@Column(name = "ClientID", length = 200, nullable = true)
+	private int ClientID;//母账户编号
+		
+	@Column(name = "ClientName", length = 255, nullable = true)
+	private String ClientName;//母账户名称
+	
+	@Column(name = "StrategyID", length = 100, nullable = true)
+	private int StrategyID;//策略编号
+
+	@Column(name = "StrategyName", length = 255, nullable = true)
+	private String StrategyName;//策略名称
+		
+	@Column(name = "AccountID", length = 200, nullable = true)
+	private int AccountID;//子账户编号
+
+	@Column(name = "QuoteID", length = 200, nullable = true)
+	private String QuoteID;//对应母单委托编号
+		
+	@Column(name = "ClOrdID", length = 200, nullable = true)
+	private String ClOrdID;//子单委托编号（日内唯一）
+		
+	@Column(name = "OrderID", length = 200, nullable = true)
+	private String OrderID;//券商委托编号（日内唯一）
+
+	@Column(name = "Symbol", length = 50, nullable = true)
+	private int Symbol;//六位证券代码
+
+	@Column(name = "SecurityType", length = 200, nullable = true)
+	private String SecurityType;//证券类型
+
+	@Column(name = "SecurityExchange", length = 200, nullable = true)
+	private String SecurityExchange;//交易所类型
+	
+	@Column(name = "Side", length = 50, nullable = true)
+	private String Side;//‘1’买‘ 2‘卖
+
+	@Column(name = "OrderTime",  nullable = true)
+	private Date OrderTime;//委托发送的北京时间
+
+	@Column(name = "OrderQty", length = 200, nullable = true)
+	private int OrderQty;//委托股数 (正买负卖)
+
+	@Column(name = "OrdType", length = 50, nullable = true)
+	private String OrdType;//委托类型
+
+	@Column(name = "Price", length = 200, nullable = true)
+	private Double Price;//委托价格
+
+	@Column(name = "CumQty", length = 50, nullable = true)
+	private int CumQty;//成交数量(正买负卖)
+
+	@Column(name = "CanceledQty", length = 50, nullable = true)
+	private int CanceledQty;//已撤量(正买负卖)
+
+	@Column(name = "AvgPx", length = 100, nullable = true)
+	private double AvgPx;//成交均价
+
+	@Column(name = "Fee", length = 100, nullable = true)
+	private double Fee;//手续费
+
+
+}

@@ -1,0 +1,36 @@
+package com.kafang.atgo.bean.fix.base;
+
+import java.time.LocalDateTime;
+
+public interface InvalidFixFieldValue {
+
+	int AccountID = -1;
+
+	int ClientID = -1;
+
+	long ClOrdID = -1L;
+
+	long QuoteID = -1L;
+
+	double Price = -1D;
+
+	long ExecID = -1L;
+
+	String OrderID = "";
+
+	int CumQty = -1;
+
+	int LeavesQty = -1;
+
+	double AvgPx = -1D;
+
+	String Text = "";
+
+	LocalDateTime TransactTime = null;
+
+	LocalDateTime EffectiveTime = null;
+
+	LocalDateTime ExpireTime = null;
+
+
+}

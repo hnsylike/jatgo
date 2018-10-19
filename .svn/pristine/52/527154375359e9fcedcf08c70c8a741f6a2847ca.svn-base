@@ -1,0 +1,74 @@
+package com.kafang.atgo.memory.manager;
+
+import javax.annotation.PostConstruct;
+
+import org.eclipse.collections.api.map.primitive.MutableIntIntMap;
+import org.eclipse.collections.api.multimap.set.MutableSetMultimap;
+import org.eclipse.collections.api.set.MutableSet;
+import org.eclipse.collections.impl.map.mutable.primitive.IntIntHashMap;
+import org.eclipse.collections.impl.multimap.set.UnifiedSetMultimap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.kafang.atgo.persistence.db.dao.api.AgAccountDao;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Component
+public final class AccountManager {
+
+	// public static final AccountManager INSTANCE = new AccountManager();
+
+	private MutableIntIntMap accountClientMap = new IntIntHashMap();
+
+	private MutableIntIntMap accountStrategyMap = new IntIntHashMap();
+
+	private MutableSetMultimap<Integer, Integer> clientAccountMap = new UnifiedSetMultimap<>();
+
+	private MutableSetMultimap<Integer, Integer> strategyAccountMap = new UnifiedSetMultimap<>();
+
+	private boolean isInit;
+
+	@Autowired
+	private AgAccountDao agAccountDao;
+
+	@PostConstruct
+	public void init() {
+		// TODO accounts input
+		// List<AgAccount> accounts = null;
+//		if (!isInit && accounts != null) {
+//			log.info("AccountManager init...");
+//			for (AgAccount account : accounts) {
+//				accountClientMap.put(account.getAccountID(), account.getClientID());
+//				accountStrategyMap.put(account.getAccountID(), account.getStrategyID());
+//				clientAccountMap.put(account.getClientID(), account.getAccountID());
+//				strategyAccountMap.put(account.getStrategyID(), account.getAccountID());
+//			}
+		isInit = true;
+		log.info("AccountManager initialized...");
+		log.debug("isInit == {}", isInit);
+//		}
+	}
+
+	public int getClientId(int accountId) {
+		return accountClientMap.containsKey(accountId) ? accountClientMap.get(accountId) : -1;
+	}
+
+	public int getStrategyId(int accountId) {
+		return accountStrategyMap.containsKey(accountId) ? accountStrategyMap.get(accountId) : -1;
+	}
+
+	public MutableSet<Integer> getAccountId4ClientId(int clientId) {
+		return clientAccountMap.get(clientId);
+	}
+
+	public MutableSet<Integer> getAccountId4StrategyId(int strategyId) {
+		return strategyAccountMap.get(strategyId);
+	}
+
+	public static void main(String[] args) {
+
+	}
+
+}

@@ -1,0 +1,2 @@
+truncate table AG_CUSTOMER;
+truncate table AG_CLIENT;

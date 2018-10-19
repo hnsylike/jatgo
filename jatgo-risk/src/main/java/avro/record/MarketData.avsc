@@ -1,0 +1,108 @@
+[
+    {
+        "namespace": "com.kafang.atgo.memory.avro.record",
+        "type": "record",
+        "name": "MdEntry",
+        "fields": [
+            {
+                "name": "price",
+                "type": "double"
+            },
+            {
+                "name": "volume",
+                "type": "long"
+            },
+            {
+                "name": "level",
+                "type": "int"
+            }
+        ]
+    },
+    {
+        "namespace": "com.kafang.atgo.memory.avro.record",
+        "type": "record",
+        "name": "MarketData",
+        "fields": [
+            {
+                "name": "sendingTime",
+                "type": "long"
+            },
+            {
+                "name": "instrumentId",
+                "type": "int"
+            },
+            {
+                "name": "transactTime",
+                "type": "long"
+            },
+            {
+                "name": "tradingSessionId",
+                "type": "int"
+            },
+            {
+                "name": "totalVolumeTraded",
+                "type": "long"
+            },
+            {
+                "name": "totalAmtTraded",
+                "type": "double"
+            },
+            {
+                "name": "openPrice",
+                "type": "double"
+            },
+            {
+                "name": "highPrice",
+                "type": "double"
+            },
+            {
+                "name": "lowPrice",
+                "type": "double"
+            },
+			{
+                "name": "lastPrice",
+                "type": "double"
+            },            
+            {
+                "name": "ask1",
+                "type": "com.kafang.atgo.memory.avro.record.MdEntry"
+            },
+           {
+                "name": "ask2",
+                "type": "com.kafang.atgo.memory.avro.record.MdEntry"
+            },
+            {
+                "name": "ask3",
+                "type": "com.kafang.atgo.memory.avro.record.MdEntry"
+            },
+            {
+                "name": "ask4",
+                "type": "com.kafang.atgo.memory.avro.record.MdEntry"
+            },
+            {
+                "name": "ask5",
+                "type": "com.kafang.atgo.memory.avro.record.MdEntry"
+            },
+            {
+                "name": "bid1",
+                "type": "com.kafang.atgo.memory.avro.record.MdEntry"
+            },
+            {
+                "name": "bid2",
+                "type": "com.kafang.atgo.memory.avro.record.MdEntry"
+            },
+            {
+                "name": "bid3",
+                "type": "com.kafang.atgo.memory.avro.record.MdEntry"
+            },
+            {
+                "name": "bid4",
+                "type": "com.kafang.atgo.memory.avro.record.MdEntry"
+            },
+            {
+                "name": "bid5",
+                "type": "com.kafang.atgo.memory.avro.record.MdEntry"
+            }
+        ]
+    }
+]

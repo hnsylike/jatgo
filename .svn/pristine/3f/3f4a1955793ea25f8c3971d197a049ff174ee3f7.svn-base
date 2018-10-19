@@ -1,0 +1,60 @@
+package com.kafang.atgo.bean.fix;
+
+import java.time.LocalDateTime;
+
+import com.kafang.atgo.bean.fix.enums.MsgType;
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.MutableMap;
+
+import com.kafang.atgo.bean.fix.base.BaseFixBean;
+import com.kafang.atgo.bean.fix.base.FixMessage;
+import com.kafang.atgo.bean.fix.base.FixMessageAnalysisException;
+import com.kafang.atgo.bean.fix.field.FixPositionField;
+import com.kafang.atgo.bean.fix.field.collect.FixFieldLists;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+
+@Getter
+@Setter
+@ToString
+@Accessors(chain = true)
+public final class FixPosition extends BaseFixBean<FixPositionField> {
+
+	private LocalDateTime sendingTime;
+	private LocalDateTime transactTime;
+	private int clientId;
+	private int symbol;
+	private int securityType;
+	private int securityExchange;
+	private int currentQty;
+	private int tradableQty;
+	private int shortQty;
+
+	public FixPosition() {
+		super(MsgType.ReportPosition);
+	}
+
+	public FixPosition(FixMessage message) throws FixMessageAnalysisException {
+		super(message);
+	}
+
+	@Override
+	public ImmutableList<FixPositionField> getFixFields() {
+		return FixFieldLists.FixPositionFields;
+	}
+
+	@Override
+	protected void setAttributes() {
+
+	}
+
+	@Override
+	protected MutableMap<FixPositionField, Object> attributesToMap() {
+
+		return null;
+	}
+
+}

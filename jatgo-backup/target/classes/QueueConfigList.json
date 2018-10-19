@@ -1,0 +1,60 @@
+[
+	{
+		"exchange": "FRMARKET",
+		"bindQueues": [
+			"BIZ_BACKMOD",
+			"BIZ_RISKMOD",
+			"BIZ_STRATMOD"
+		]
+	},
+	{
+		"exchange": "TOBACKUP",
+		"bindQueues": [
+			"BIZ_BACKMOD"
+		]
+	},
+	{
+		"exchange": "FRCLIENT",
+		"bindQueues": [
+			"BIZ_BACKMOD",
+			"BIZ_STRATMOD"
+		]
+	},
+	{
+		"exchange": "TOCENSOR",
+		"bindQueues": [
+			"BIZ_BACKMOD",
+			"BIZ_RISKMOD"
+		]
+	},
+	{
+		"exchange": "FRCENSOR",
+		"bindQueues": [
+			"BIZ_BACKMOD",
+			"BIZ_STRATMOD"
+		]
+	},
+	{
+		"exchange": "TOBROKER",
+		"bindQueues": [
+			"BIZ_BACKMOD",
+			"BIZ_ADAPTOR"
+		]
+	},
+	{
+		"exchange": "FRBROKER",
+		"bindQueues": [
+			"BIZ_BACKMOD",
+			"BIZ_RISKMOD",
+			"BIZ_STRATMOD"
+		]
+	},
+	
+	{
+		"exchange": "TOCLIENT",
+		"bindQueues": [
+			"BIZ_BACKMOD",
+			"BIZ_WEBSERVER"
+		]
+	}
+]

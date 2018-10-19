@@ -1,0 +1,221 @@
+package com.kafang.atgo.restful.service.impl;
+
+import com.kafang.atgo.AtgoErrorCode;
+import com.kafang.atgo.AtgoException;
+import com.kafang.atgo.restful.bean.rep.PermissionRep;
+import com.kafang.atgo.restful.bean.req.PermissionInfoReq;
+import com.kafang.atgo.restful.bean.req.PermissionPageReq;
+import com.kafang.atgo.restful.dao.api.WsPermissionDao;
+import com.kafang.atgo.restful.dao.api.WsRoleDao;
+import com.kafang.atgo.restful.dao.api.WsRolePermissionDao;
+import com.kafang.atgo.restful.dto.rep.PageDto;
+import com.kafang.atgo.restful.entity.WsPermission;
+import com.kafang.atgo.restful.entity.WsRole;
+import com.kafang.atgo.restful.entity.WsRolePermission;
+import com.kafang.atgo.restful.service.api.WsPermissionService;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+/**
+ * @author like
+ * @description 资源service
+ * @data 2018/10/17
+ */
+@Service
+public class WsPermissionServiceImpl implements WsPermissionService {
+    @Autowired
+    private WsPermissionDao wsPermissionDao;
+
+    @Autowired
+    private WsRolePermissionDao wsRolePermissionDao;
+
+    @Autowired
+    private WsRoleDao wsRoleDao;
+
+    @Override
+    public int del(List<Long> ids) {
+        Optional<List<WsPermission>> optionalWsPermissions = wsPermissionDao.queryByIds(ids);
+        if (!optionalWsPermissions.isPresent()) {
+            return 0;
+        }
+
+        List<Long> permissionIds = optionalWsPermissions.get().stream().map(WsPermission::getPermissionId).collect(Collectors.toList());
+        List<WsRolePermission> wsRolePermissions = wsRolePermissionDao.queryByPermissionIds(permissionIds).orElse(Collections.emptyList());
+
+        //删除资源对应的角色
+        for (WsRolePermission rolePermission : wsRolePermissions) {
+            wsRolePermissionDao.del(rolePermission.getId());
+        }
+        //删除资源
+        for (WsPermission wsPermission : optionalWsPermissions.get()) {
+            wsPermissionDao.del(wsPermission.getId());
+        }
+        return permissionIds.size();
+    }
+
+
+    @Override
+    public PageDto<WsPermission> queryByParam(PermissionPageReq permissionReq) {
+        permissionReq.setPageSize(permissionReq.getPageSize() == null || permissionReq.getPageSize() <= 0 ? 10 : permissionReq.getPageSize());
+        permissionReq.setPageNo(permissionReq.getPageNo() == null || permissionReq.getPageNo() <= 1 ? 1 : permissionReq.getPageNo());
+        Long offset = Long.valueOf((permissionReq.getPageNo() - 1) * permissionReq.getPageSize());
+
+        Long count = wsPermissionDao.count(permissionReq);
+        List<WsPermission> wsPermissions = wsPermissionDao.queryByParam(permissionReq, offset, Long.valueOf(permissionReq.getPageSize())).orElse(Collections.emptyList());
+        PageDto<WsPermission> pageDto = new PageDto<>(permissionReq.getPageNo(), permissionReq.getPageSize(), count.intValue(), wsPermissions);
+        return pageDto;
+    }
+
+    @Override
+    public PermissionRep queryById(Long id) {
+        Optional<WsPermission> optionalWsPermission = wsPermissionDao.queryById(id);
+
+        if (!optionalWsPermission.isPresent()) {
+            throw new AtgoException(AtgoErrorCode.REQUEST_PARAMETER_ERROR, "资源id=" + id + "不存在，请刷新页面");
+        }
+        WsPermission wsPermission = optionalWsPermission.get();
+
+        List<Long> permissionIds = Arrays.asList(wsPermission.getPermissionId());
+        List<WsRolePermission> wsRolePermissions = wsRolePermissionDao.queryByPermissionIds(permissionIds).orElse(Collections.emptyList());
+        List<WsRole> wsRoles = wsRoleDao.queryAll().orElse(Collections.emptyList());
+
+        PermissionRep req = new PermissionRep();
+        req.setId(wsPermission.getId());
+        req.setPermissionId(wsPermission.getPermissionId());
+        req.setPermissionMethod(wsPermission.getPermissionMethod());
+        req.setPermissionName(wsPermission.getPermissionName());
+        req.setPermissionUrl(wsPermission.getPermissionUrl());
+        req.setWhite(wsPermission.getWhite());
+
+        //获取资源对应的角色
+        List<PermissionRep.RolePermission> rolePermissions = new ArrayList<>();
+        req.setRolePermissions(rolePermissions);
+        for (WsRolePermission wsRolePermission : wsRolePermissions) {
+            PermissionRep.RolePermission rolePermission = new PermissionRep.RolePermission();
+            rolePermission.setId(wsRolePermission.getId());
+            rolePermission.setRoleId(wsRolePermission.getRoleId());
+            rolePermissions.add(rolePermission);
+        }
+
+        //获取所有角色
+        List<PermissionRep.Role> roles = new ArrayList<>();
+        req.setRoles(roles);
+        for (WsRole wsRole : wsRoles) {
+            PermissionRep.Role role = new PermissionRep.Role();
+            role.setId(wsRole.getId());
+            role.setRemark(wsRole.getRemark());
+            role.setRoleId(wsRole.getRoleId());
+            role.setRoleName(wsRole.getRoleName());
+            roles.add(role);
+        }
+
+        return req;
+    }
+
+    /**
+     * 校验资源信息
+     *
+     * @param permissionInfoReq
+     */
+    private void checkPermissionInfo(PermissionInfoReq permissionInfoReq, List<WsPermission> wsPermissions) {
+        List<String> list = wsPermissions.stream().
+                filter(p -> null == permissionInfoReq.getId() || !p.getId().equals(permissionInfoReq.getId())).
+                map(p -> p.getPermissionMethod().toUpperCase() + "_" + p.getPermissionUrl().trim()).collect(Collectors.toList());
+        if (StringUtils.isEmpty(permissionInfoReq.getPermissionUrl())) {
+            throw new AtgoException(AtgoErrorCode.REQUEST_PARAMETER_ERROR, "资源地址不能为空");
+        }
+        if (null == permissionInfoReq.getWhite()) {
+            throw new AtgoException(AtgoErrorCode.REQUEST_PARAMETER_ERROR, "是否白名单不能为空");
+        }
+        if (StringUtils.isEmpty(permissionInfoReq.getPermissionMethod())) {
+            throw new AtgoException(AtgoErrorCode.REQUEST_PARAMETER_ERROR, "资源请求方式不能为空");
+        }
+        String key = permissionInfoReq.getPermissionMethod().toUpperCase() + "_" + permissionInfoReq.getPermissionUrl().trim();
+        if (list.contains(key)) {
+            throw new AtgoException(AtgoErrorCode.REQUEST_PARAMETER_ERROR, "资源地址和请求方式已重复，请重新输入");
+        }
+    }
+
+    @Override
+    public int saveOrUpdate(PermissionInfoReq permissionInfoReq) {
+        List<WsPermission> wsPermissions = wsPermissionDao.queryAll().orElse(Collections.emptyList());
+
+        //检查
+        checkPermissionInfo(permissionInfoReq, wsPermissions);
+
+        WsPermission wsPermission = new WsPermission();
+        if (null == permissionInfoReq.getId()) {
+            //新增
+            Long permissionId = 0L;
+            if (CollectionUtils.isNotEmpty(wsPermissions)) {
+                permissionId = wsPermissions.get(wsPermissions.size() - 1).getPermissionId();
+            }
+
+            //新增资源
+            wsPermission.setPermissionId(permissionId + 1);
+            wsPermission.setPermissionMethod(permissionInfoReq.getPermissionMethod());
+            wsPermission.setPermissionName(StringUtils.isEmpty(permissionInfoReq.getPermissionName()) ? "" : permissionInfoReq.getPermissionName());
+            wsPermission.setPermissionUrl(permissionInfoReq.getPermissionUrl().trim());
+            wsPermission.setWhite(permissionInfoReq.getWhite());
+            wsPermissionDao.insert(wsPermission);
+
+            //新增资源对应的角色
+            if (CollectionUtils.isNotEmpty(permissionInfoReq.getRolePermissions())) {
+                for (PermissionInfoReq.RolePermission rolePermission : permissionInfoReq.getRolePermissions()) {
+                    WsRolePermission wsRolePermission = new WsRolePermission();
+                    wsRolePermission.setPermissionId(wsPermission.getPermissionId());
+                    wsRolePermission.setRoleId(rolePermission.getRoleId());
+                    wsRolePermissionDao.insert(wsRolePermission);
+                }
+            }
+        } else {
+            //修改
+            if (null == permissionInfoReq.getPermissionId()) {
+                throw new AtgoException(AtgoErrorCode.REQUEST_PARAMETER_ERROR, "PermissionId不能为空");
+            }
+
+            //修改资源
+            wsPermission.setId(permissionInfoReq.getId());
+            wsPermission.setPermissionId(permissionInfoReq.getPermissionId());
+            wsPermission.setPermissionMethod(permissionInfoReq.getPermissionMethod());
+            wsPermission.setPermissionName(StringUtils.isEmpty(permissionInfoReq.getPermissionName()) ? "" : permissionInfoReq.getPermissionName());
+            wsPermission.setPermissionUrl(permissionInfoReq.getPermissionUrl().trim());
+            wsPermission.setWhite(permissionInfoReq.getWhite());
+            wsPermissionDao.update(wsPermission);
+
+            List<Long> permissionIds = Arrays.asList(wsPermission.getPermissionId());
+            List<WsRolePermission> wsRolePermissions = wsRolePermissionDao.queryByPermissionIds(permissionIds).orElse(Collections.emptyList());
+            Map<Long, WsRolePermission> rolePermissionMap = wsRolePermissions.stream().collect(Collectors.toMap(WsRolePermission::getId, (p) -> p));
+
+            //修改资源对应的角色
+            if (CollectionUtils.isNotEmpty(permissionInfoReq.getRolePermissions())) {
+                for (PermissionInfoReq.RolePermission rolePermission : permissionInfoReq.getRolePermissions()) {
+                    if (null != rolePermission.getId()) {
+                        WsRolePermission old = rolePermissionMap.get(rolePermission.getId());
+                        if (!old.getRoleId().equals(rolePermission.getRoleId())) {
+                            old.setRoleId(rolePermission.getRoleId());
+                            wsRolePermissionDao.update(old);
+                        }
+                        rolePermissionMap.remove(rolePermission.getId());
+                    } else {
+                        WsRolePermission wsRolePermission = new WsRolePermission();
+                        wsRolePermission.setPermissionId(wsPermission.getPermissionId());
+                        wsRolePermission.setRoleId(rolePermission.getRoleId());
+                        wsRolePermissionDao.insert(wsRolePermission);
+                    }
+                }
+            }
+
+            for (Map.Entry<Long, WsRolePermission> entry : rolePermissionMap.entrySet()) {
+                wsRolePermissionDao.del(entry.getKey());
+            }
+        }
+
+        return wsPermission.getId().intValue();
+    }
+}

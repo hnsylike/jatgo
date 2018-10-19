@@ -1,0 +1,72 @@
+package com.kafang.atgo.restful.service.impl;
+
+
+import com.kafang.atgo.restful.dao.api.AgClientDao;
+import com.kafang.atgo.restful.dao.api.WsUserCustomerMpDao;
+import com.kafang.atgo.restful.entity.AgClient;
+import com.kafang.atgo.restful.entity.WsUserCustomerMp;
+import com.kafang.atgo.restful.service.api.WsUserCustomerMpService;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
+public class WsUserCustomerMpServiceImpl implements WsUserCustomerMpService {
+
+	@Autowired
+	private WsUserCustomerMpDao wsDao;
+
+	@Autowired
+	private AgClientDao agClientDao;
+
+	@Override
+	public WsUserCustomerMp getCustomerId(long customerId) {
+		return wsDao.selectById(customerId).orElse(null);
+	}
+
+	@Override
+	public int update(WsUserCustomerMp wsUserCustomerMp) {
+		return wsDao.update(wsUserCustomerMp);
+	}
+
+	@Override
+	public int del(long id) {
+		return wsDao.del(id);
+	}
+
+	@Override
+	public int insert(WsUserCustomerMp wcm) {
+		return wsDao.insert(wcm);
+	}
+
+	@Override
+	public String selectCustomerId() {
+		return wsDao.selectCustomerId();
+	}
+
+	@Override
+	public String selectUserId() {
+		return wsDao.selectUserId();
+	}
+
+	@Override
+	public List<WsUserCustomerMp> getByClientId(List<Integer> clientIds) {
+		Optional<List<AgClient>> optional=agClientDao.selectByClientId(clientIds);
+		if(!optional.isPresent()){
+			return Collections.emptyList();
+		}
+
+		List<Long> customerIds = optional.get().stream().map(AgClient::getCustomerID).collect(Collectors.toList());
+		if(CollectionUtils.isEmpty(customerIds)) {
+			return Collections.emptyList();
+		}
+		return wsDao.selectByCustomerIds(customerIds).orElse(Collections.emptyList());
+	}
+
+
+}

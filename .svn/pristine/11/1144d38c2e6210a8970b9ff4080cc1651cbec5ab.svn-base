@@ -1,0 +1,40 @@
+package com.kafang.atgo.backup.service;
+
+import com.kafang.atgo.backup.dao.BackupDao;
+import com.kafang.atgo.backup.dao.BakMessage;
+import io.ffreedom.common.datetime.DateTimeUtil;
+import org.eclipse.collections.api.set.MutableSet;
+import org.eclipse.collections.impl.set.mutable.UnifiedSet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.stream.Collectors;
+
+@Service
+public class BackupServiceImpl implements BackupService {
+
+    @Autowired
+    private BackupDao backupDao;
+
+    @Override
+    public boolean saveBakMessage(LocalDateTime receivedDateTime, String msgType, int handlInst, String msgText) {
+        return backupDao
+                .insertOrUpdate(new BakMessage().setReceivedDate(DateTimeUtil.intDate(receivedDateTime.toLocalDate()))
+                        .setReceivedTime(DateTimeUtil.intTimeToMillisecond(receivedDateTime.toLocalTime()))
+                        .setMsgType(msgType).setHandlInst(handlInst).setMsgText(msgText)) > 0;
+    }
+
+    @Override
+    public MutableSet<BackupMsg> getBackupMsgSet(LocalDate date, String msgType, int handlInst) {
+        return backupDao.selectBakMessage(DateTimeUtil.intDate(date), msgType, handlInst)
+                .map(bakMessageList -> UnifiedSet
+                        .newSet(bakMessageList.stream()
+                                .map(bakMessage -> new BackupMsg(bakMessage.getReceivedDate(),
+                                        bakMessage.getReceivedTime(), bakMessage.getMsgText()))
+                                .collect(Collectors.toList())))
+                .orElse(UnifiedSet.newSet());
+    }
+
+}

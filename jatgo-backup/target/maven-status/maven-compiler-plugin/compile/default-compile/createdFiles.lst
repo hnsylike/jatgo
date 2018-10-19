@@ -1,0 +1,17 @@
+com\kafang\atgo\backup\service\BackupMsg.class
+com\kafang\atgo\backup\BackupModuleMessageHandler$1.class
+com\kafang\atgo\backup\resend\ResendMessage.class
+com\kafang\atgo\backup\dao\BackupDao.class
+com\kafang\atgo\backup\dao\BakMessage$BakMessageMsgType.class
+com\kafang\atgo\backup\service\BackupServiceImpl.class
+com\kafang\atgo\backup\dao\BakMessage.class
+com\kafang\atgo\backup\resend\ResendConfigComponent.class
+com\kafang\atgo\backup\AppConfiguration.class
+com\kafang\atgo\backup\BackupModuleBoot.class
+com\kafang\atgo\backup\BackupModuleMessageHandler.class
+com\kafang\atgo\backup\BackupModuleMessageReceiver.class
+com\kafang\atgo\backup\resend\ResendWorker.class
+com\kafang\atgo\backup\dao\BakMessage$TableColumn.class
+com\kafang\atgo\backup\service\BackupService.class
+com\kafang\atgo\backup\dao\BackupDaoImpl.class
+com\kafang\atgo\backup\resend\ResendConfig.class

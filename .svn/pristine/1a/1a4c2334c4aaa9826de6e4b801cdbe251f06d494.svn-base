@@ -1,0 +1,84 @@
+package com.kafang.atgo.restful.service.impl;
+
+import com.kafang.atgo.persistence.db.dao.api.AgAccountDao;
+import com.kafang.atgo.persistence.db.entity.AgAccount;
+import com.kafang.atgo.restful.dao.api.AgClientDao;
+import com.kafang.atgo.restful.dao.api.AgStrategyParamL2Dao;
+import com.kafang.atgo.restful.entity.AgClient;
+import com.kafang.atgo.restful.entity.AgStrategyParamL2;
+import com.kafang.atgo.restful.service.api.AgStrategyParamL2Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Service
+public class AgStrategyParamL2ServiceImpl implements AgStrategyParamL2Service {
+
+	@Autowired
+	private AgStrategyParamL2Dao agDao;
+
+	@Autowired
+	private AgAccountDao acDao;
+
+	@Autowired
+	private AgClientDao agclientDao;
+
+	@Override
+	public Map<Integer, Map<String, String>> selectById(int strategyId) {
+		Optional<AgAccount> opt = acDao.selectById(strategyId);
+		if (!opt.isPresent()) {
+			return new HashMap<>();
+		}
+		AgAccount ws = opt.get();
+		List<AgStrategyParamL2> asp=agDao.selectById(ws.getStrategyID()).orElse(Collections.emptyList());
+		Map<Integer, Map<String, String>> m = new HashMap<>();
+		Map<String, String> m1 = new HashMap<>();
+		for(AgStrategyParamL2 a1:asp) {
+			m1.put("ParamName",a1.getName());
+			m1.put("ParamValue",a1.getValue());
+			m.put(ws.getAccountID(), m1);
+		}
+		return m;
+	}
+
+
+	@Override
+	public Map<Integer, Map<String, String>> selectByStrategyId(int strategyId) {
+		Optional<List<AgAccount>> selectByStrategyId = acDao.selectByStrategyId(strategyId);
+		if (!selectByStrategyId.isPresent()) {
+			return new HashMap<>();
+		}
+		List<AgAccount> list = selectByStrategyId.get();
+		//此方法过滤重复的
+		list.stream().map(AgAccount::getClientID).distinct().collect(Collectors.toList());
+		//List<String> id =list.stream().map(AgAccount::getAccountID).collect(Collectors.toList());
+		Optional<List<AgClient>> aglist = agclientDao.selectByClientId(list.stream().map(AgAccount::getClientID).collect(Collectors.toList()));
+		if (!aglist.isPresent()) {
+			return new HashMap<>();
+		}
+		
+		List<AgClient> list2 =aglist.get();
+		Set<Long> set2 = new TreeSet<>();
+		list2.forEach(client-> {
+			set2.add(client.getCustomerID());
+		});
+		Optional<List<AgStrategyParamL2>> agp=agDao.selectByCustomerId(list2.stream().map(AgClient::getCustomerID).collect(Collectors.toList()));
+		if (!agp.isPresent()) {
+			return new HashMap<>();
+		}
+		Map<Integer, Map<String, String>> m = new HashMap<>();
+		Map<String, String> m1 = new HashMap<>();
+		List<AgStrategyParamL2> asp =agp.get();
+		for(AgStrategyParamL2 a1:asp) {
+			m1.put("ParamName",a1.getName());
+			m1.put("ParamValue",a1.getValue());
+			for(AgAccount ac:list) {
+				m.put(ac.getAccountID(), m1);
+			}
+		}
+		return m;
+	}
+
+}

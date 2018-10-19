@@ -1,0 +1,111 @@
+package com.kafang.atgo.restful.resource;
+
+import com.kafang.atgo.restful.base.AtgoRestfulApi;
+import com.kafang.atgo.restful.bean.req.SendCodeBean;
+import com.kafang.atgo.restful.dto.rep.ResponseTemplate;
+import com.kafang.atgo.restful.sms.JsonReqClient;
+import io.swagger.annotations.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+@Api(value = "sms Rest Api测试")
+@Path("/sms")
+@Slf4j
+@Component
+public class SmsRestfulApi extends AtgoRestfulApi {
+
+	private static Map<String, SendCodeBean> cacheSmsCode = new ConcurrentHashMap<>(256);
+
+	@Value("${sms:false}")
+	private boolean sms;
+
+	@Value("${sid}")
+	String sid;
+
+	@Value("${token}")
+	String token;
+
+	@Value("${appid}")
+	String appid;
+
+	/**
+	 * 短信模板ID.
+	 */
+	@Value("${templateid}")
+	String templateid;
+
+	@Autowired
+	private JsonReqClient jsonReqClient;
+
+	/**
+	 * 发送手机验证码.
+	 */
+	@GET
+	@Path("/send/{phoneNum}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "发送手机验证码rest api", notes = "rest api")
+	@ApiImplicitParam(name = "手机号码", required = true, paramType = "path")
+	@Consumes(JSON_UTF8)
+	public ResponseTemplate<Response.Status> send(@PathParam("phoneNum") String phoneNum) throws Exception {
+		// 云之讯平台账号
+		if (sms) {
+			// 随机生成6位数字
+			int code = (int) ((Math.random() * 9 + 1) * 100000);
+			String param = String.valueOf(code);
+			String uid = "51467c25fda545459da588ff228e0a7e";
+			String result = jsonReqClient.sendSms(sid, token, appid, templateid, param, phoneNum, uid);
+			SendCodeBean sendCode = SendCodeBean.newWith(phoneNum, code, LocalDateTime.now().plusMinutes(3));
+			cacheSmsCode.put(phoneNum, sendCode);
+			log.info("REST: sendSms /send", phoneNum);
+		}
+		return ResponseTemplate.ok(Response.Status.OK);
+	}
+
+	/**
+	 * 短信验证码redis.
+	 */
+	@GET
+	@Path("/validate/{smsCode}/{phoneNum}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "短信验证码rest api", notes = "rest api")
+	@Consumes(JSON_UTF8)
+	public ResponseTemplate<Response.Status> ValidateCode(
+			@ApiParam(name = "验证码", required = true) @PathParam("smsCode") String smsCode,
+			@ApiParam(name = "手机号", required = true) @PathParam("phoneNum") String phoneNum) {
+		if (!sms) {
+			return ResponseTemplate.ok();
+		}
+		if (smsCode == null || smsCode.equals("")) {
+			return ResponseTemplate.failed(Response.Status.BAD_REQUEST, "验证码不能为空");
+		}
+		SendCodeBean sendCode = cacheSmsCode.get(phoneNum);
+		if (sendCode != null) {
+			// 验证码错误
+			if (!smsCode.equals(Integer.toString(sendCode.getCode()))) {
+				return ResponseTemplate.failed(Response.Status.INTERNAL_SERVER_ERROR, "验证码错误");
+			}
+			if (LocalDateTime.now().isAfter(sendCode.getExpiredTime())) {
+				return ResponseTemplate.failed(Response.Status.BAD_REQUEST, "验证码过期");
+			}
+			return ResponseTemplate.ok(Response.Status.OK);
+		}
+		return ResponseTemplate.failed(Response.Status.BAD_REQUEST, "值为空");
+	}
+
+//    static AbsRestClient InstantiationRestAPI() {
+//        return new JsonReqClient();
+//    }
+
+	public SendCodeBean getSendCodeBean(String phoneNum) {
+		return cacheSmsCode.get(phoneNum);
+	}
+}

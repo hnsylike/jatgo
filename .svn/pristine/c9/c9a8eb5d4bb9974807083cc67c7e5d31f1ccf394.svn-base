@@ -1,0 +1,6 @@
+truncate table AG_CUSTOMER;
+truncate table AG_CLIENT;
+truncate table WS_USER_CUSTOMER_MP;
+truncate table WS_USER;
+truncate table WS_PHONE;
+truncate table AG_ACCOUNT;

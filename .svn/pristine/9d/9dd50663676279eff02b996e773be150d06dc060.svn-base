@@ -1,0 +1,95 @@
+package com.kafang.atgo.backup.resend;
+
+import java.time.LocalDate;
+
+import javax.annotation.PostConstruct;
+
+import org.eclipse.collections.api.map.primitive.MutableIntObjectMap;
+import org.eclipse.collections.api.set.MutableSet;
+import org.eclipse.collections.impl.map.mutable.primitive.IntObjectHashMap;
+import org.eclipse.collections.impl.set.mutable.UnifiedSet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import com.kafang.atgo.backup.service.BackupMsg;
+import com.kafang.atgo.backup.service.BackupService;
+import com.kafang.atgo.bean.fix.FixResendRequest;
+
+import io.ffreedom.common.charset.Charsets;
+import io.ffreedom.common.queue.ArrayBlockingMPSCQueue;
+import io.ffreedom.common.queue.base.SCQueue;
+import io.ffreedom.transport.base.role.Publisher;
+import io.ffreedom.transport.rabbitmq.RabbitMqPublisher;
+import io.ffreedom.transport.rabbitmq.config.RmqPublisherConfigurator;
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+public class ResendWorker {
+
+	@Value("${mq.host}")
+	private String host;
+	@Value("${mq.port}")
+	private int port;
+	@Value("${mq.username}")
+	private String mqUsername;
+	@Value("${mq.password}")
+	private String mqPassword;
+
+	@Autowired
+	private ResendConfigComponent resendConfigTable;
+
+	@Autowired
+	private BackupService backupService;
+
+	private MutableIntObjectMap<Publisher<byte[]>> resendPublisherMap = IntObjectHashMap.newMap();
+
+	@PostConstruct
+	public void init() {
+		resendConfigTable.getResendConfigs().forEach(config -> {
+			resendPublisherMap.put(config.getProcessId(),
+					new RabbitMqPublisher(config.getProcessName() + "-ResendPublisher",
+							RmqPublisherConfigurator.configuration().setConnectionParam(host, port)
+									.setUserParam(mqUsername, mqPassword).setModeDirect(config.getResendQueue())));
+		});
+	}
+
+	private SCQueue<FixResendRequest> taskQueue = new ArrayBlockingMPSCQueue<>(128, true, request -> {
+		ResendConfig resendConfig = resendConfigTable.getResendConfig(request.getProcessId());
+		if (resendConfig != null) {
+			try {
+				log.info(
+						"ProcessName -> (" + resendConfig.getProcessName()
+								+ ") message resend task started, message type count {}.",
+						resendConfig.getResendMessages().size());
+				MutableSet<BackupMsg> backupMsgSet = UnifiedSet.newSet();
+				resendConfig.getResendMessages().forEach(message -> {
+					backupMsgSet.addAll(backupService.getBackupMsgSet(LocalDate.now(), message.getMsgType(),
+							message.getHandlInst()));
+				});
+				log.info("ProcessName -> (" + resendConfig.getProcessName()
+						+ ") message resend task checkout message count {}.", backupMsgSet.size());
+				Publisher<byte[]> publisher = resendPublisherMap.get(resendConfig.getProcessId());
+				backupMsgSet.forEach(backMsg -> {
+					publisher.publish(backMsg.getMsgText().getBytes(Charsets.UTF8));
+				});
+				log.info("ProcessName -> (" + resendConfig.getProcessName() + ") message resend task finish.");
+			} catch (Exception e) {
+				log.error("ProcessName -> (" + resendConfig.getProcessName() + ") message resend task throw exception.",
+						e);
+			}
+		} else {
+			log.error("ProcessId -> (" + request.getProcessId() + ") is not match ResendConfig!");
+		}
+	});
+
+	public void resendMessage(FixResendRequest request) {
+		if (taskQueue.enQueue(request)) {
+			log.info("ProcessId -> (" + request.getProcessId() + ") Message resend request enQueue success.");
+		} else {
+			log.error("ProcessId -> (" + request.getProcessId() + ") Message resend request enQueue failure!");
+		}
+	}
+
+}

@@ -1,0 +1,27 @@
+package com.kafang.atgo.restful.service.api;
+
+import com.kafang.atgo.restful.entity.AgCustomer;
+
+import java.util.List;
+
+public interface AgCustomerService {
+	
+	AgCustomer getId(int id);
+	
+	List<AgCustomer> getAll();
+	
+	int insert(AgCustomer ac);
+	
+	AgCustomer selectByCustomerName(String customerName);
+	
+	String selectCustomerId();
+	
+	List<AgCustomer> getCustomerName(String customerName);
+	
+	int delCustomer(int customerId);
+	
+	int delClient(int id);
+	
+	int delCustomerUser(int id);
+
+}

@@ -1,0 +1,7 @@
+{
+  "timestamp": "2018-09-27T12:53:45.057+0000",
+  "status": 500,
+  "error": "Internal Server Error",
+  "message": "token已过期",
+  "path": "/jatgo-service/user/findCustomer/7"
+}

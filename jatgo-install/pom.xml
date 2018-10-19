@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>jatgo</artifactId>
+        <groupId>com.kafang</groupId>
+        <version>0.1</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>jatgo-install</artifactId>
+
+    <properties>
+        <flyway.db.dirver/>
+        <flyway.db.user/>
+        <flyway.db.password/>
+        <flyway.db.url/>
+        <!--<flyway.location />-->
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>4.0.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <!-- flyway maven plugins -->
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>4.0.3</version>
+                <configuration>
+                    <driver>${flyway.db.dirver}</driver>
+                    <url>${flyway.db.url}</url>
+                    <user>${flyway.db.user}</user>
+                    <password>${flyway.db.password}</password>
+                </configuration>
+            </plugin>
+
+            <!-- spring package plugins -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <finalName>db-manager</finalName>
+                    <layout>ZIP</layout>
+                    <mainClass>com.kafang.atgo.db.FlywayApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- maven assembly plugins  -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <finalName>jatgo-install</finalName>
+                    <outputDirectory>${project.basedir}/target</outputDirectory>
+                    <outputDirectory>../</outputDirectory>
+                    <descriptors>
+                        <descriptor>assembly.xml</descriptor>
+                        <descriptor>assembly-install.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <profiles>
+        <profile>
+            <id>local_test</id>
+            <properties>
+                <flyway.db.dirver>com.mysql.jdbc.Driver</flyway.db.dirver>
+                <flyway.db.user>atgo_test</flyway.db.user>
+                <flyway.db.password>123456</flyway.db.password>
+                <flyway.db.url>jdbc:mysql://localhost:3306/ATGO_TEST?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false</flyway.db.url>
+                <!--<flyway.location>classpath:db/migration/</flyway.location>-->
+            </properties>
+            <!-- 默认执行这个 -->
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
+        <profile>
+            <id>prod</id>
+            <properties>
+                <flyway.db.dirver>com.mysql.jdbc.Driver</flyway.db.dirver>
+                <flyway.db.user>devwrite</flyway.db.user>
+                <flyway.db.password>atgoPass</flyway.db.password>
+                <flyway.db.url>jdbc:mysql://192.168.1.251:3306/ATGO_PROD?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false</flyway.db.url>
+                <!--<flyway.location>classpath:db/migration/</flyway.location>-->
+            </properties>
+        </profile>
+
+        <profile>
+            <id>test</id>
+            <properties>
+                <flyway.db.dirver>com.mysql.jdbc.Driver</flyway.db.dirver>
+                <flyway.db.user>devwrite</flyway.db.user>
+                <flyway.db.password>atgoPass</flyway.db.password>
+                <flyway.db.url>jdbc:mysql://192.168.1.251:3306/ATGO_TEST?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false</flyway.db.url>
+                <!--<flyway.location>classpath:db/migration/</flyway.location>-->
+            </properties>
+        </profile>
+
+        <profile>
+            <id>qa</id>
+            <properties>
+                <flyway.db.dirver>com.mysql.jdbc.Driver</flyway.db.dirver>
+                <flyway.db.user>devwrite</flyway.db.user>
+                <flyway.db.password>atgoPass</flyway.db.password>
+                <flyway.db.url>jdbc:mysql://192.168.1.251:3306/ATGO_QA?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false</flyway.db.url>
+                <!--<flyway.location>classpath:db/migration/</flyway.location>-->
+            </properties>
+        </profile>
+    </profiles>
+
+</project>

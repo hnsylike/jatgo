@@ -1,0 +1,1 @@
+truncate table WS_USER_CUSTOMER_MP;

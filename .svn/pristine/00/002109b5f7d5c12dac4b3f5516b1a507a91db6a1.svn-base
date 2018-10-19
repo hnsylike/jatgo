@@ -1,0 +1,15 @@
+
+spring.profiles.active=${ATGO_ENV}
+mq.host = 192.168.1.251
+mq.port = 5672
+mq.username = kafangMQ
+mq.password = kafangMQpass
+mq.auto.ack = false
+mq.auto.recovery = true
+
+mq.queue.biz.risk = BIZ_RISKMOD
+
+
+atgo.db.url=jdbc:mysql://192.168.1.251:3306/ATGO_PROD?user=devwrite&password=atgoPass&useSSL=false&characterEncoding=utf-8
+
+logging.path=log

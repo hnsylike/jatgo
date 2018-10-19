@@ -1,0 +1,62 @@
+##rabbitMQ
+export rabbitMQ_ipAddress=192.168.1.251
+export rabbitMQ_port=5672
+export rabbitMQ_username=kafangMQ
+export rabbitMQ_password=kafangMQpass
+export rabbitMQ_queueRecAdaptor=REC_ADAPTOR
+export rabbitMQ_queueBizAdaptor=BIZ_ADAPTOR
+export rabbitMQ_queueRecWebServer=REC_WEBSERVER
+export rabbitMQ_queueBizWebServer=BIZ_WEBSERVER
+export rabbitMQ_queueRecBackMod=REC_BACKMOD
+export rabbitMQ_queueBizBackMod=BIZ_BACKMOD
+export rabbitMQ_queueRecRiskMod=REC_RISKMOD
+export rabbitMQ_queueBizRiskMod=BIZ_RISKMOD
+export rabbitMQ_queueRecSimulExch=REC_SIMULEXCH
+export rabbitMQ_queueBizSimulExch=BIZ_SIMULEXCH
+export rabbitMQ_queueRecStratMod=REC_STRATMOD
+export rabbitMQ_queueBizStratMod=BIZ_STRATMOD
+export rabbitMQ_queueRecMDL1Pub=REC_MDL1PUB
+export rabbitMQ_queueBizMDL1Pub=BIZ_MDL1PUB
+export rabbitMQ_exchCancelActual=TOBROKER
+export rabbitMQ_exchCancelAlgo=FRCLIENT
+export rabbitMQ_exchCancelUncensor=TOCENSOR
+export rabbitMQ_exchHeartbeat=FRMARKET
+export rabbitMQ_exchInstrumentInfo=FRMARKET
+export rabbitMQ_exchMDL1=FRMARKET
+export rabbitMQ_exchNews=TOCLIENT
+export rabbitMQ_exchOrderActual=TOBROKER
+export rabbitMQ_exchOrderAlgo=FRCLIENT
+export rabbitMQ_exchOrderUncensor=TOCENSOR
+export rabbitMQ_exchReportActual=FRBROKER
+export rabbitMQ_exchReportAlgo=TOCLIENT
+export rabbitMQ_exchReportBalance=FRBROKER
+export rabbitMQ_exchReportPosition=FRBROKER
+export rabbitMQ_exchReportStatus=FRBROKER
+export rabbitMQ_exchReportUncensor=FRCENSOR
+export rabbitMQ_exchResendRequest=TOBACKUP
+##mysql
+export mysql_ipAddress=192.168.1.251
+export mysql_port=3306
+export mysql_username=devwrite
+export mysql_password=atgoPass
+export mysql_databaseName=ATGO_PROD
+
+##ATGO system
+export ATGO_WEB_SERVER_PORT=12345
+export ATGO_HOME=/home/atgouser/ATGO/0.1/
+export ATGO_LOGS_DIR=~/jatgo-install/logs
+
+#短信服务
+export ATGO_SMS=false
+#短信服务地址
+export ATGO_SMS_IP=open.ucpaas.com
+#用户帐号唯一标识
+export ATGO_SMS_SID=2395995ee2142a0b7b60ce4e907a31e8
+# 授权信息
+export ATGO_SMS_TOKEN=4865d27fe99e36726fe02359db4beb1a
+# 短信服务平台分配的唯一编号
+export ATGO_SMS_APPID=51467c25fda545459da588ff228e0a7e
+
+#券商名称
+export ATGO_DEFAULT_BROKER=yhzq
+

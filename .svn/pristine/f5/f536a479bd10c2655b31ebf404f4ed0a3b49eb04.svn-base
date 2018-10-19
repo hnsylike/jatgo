@@ -1,0 +1,48 @@
+package com.kafang.atgo.backup.resend;
+
+import java.util.List;
+
+public class ResendConfig {
+
+	private int processId;
+	private String processName;
+	private String resendQueue;
+	private List<ResendMessage> resendMessages;
+
+	public int getProcessId() {
+		return processId;
+	}
+
+	public ResendConfig setProcessId(int processId) {
+		this.processId = processId;
+		return this;
+	}
+
+	public String getProcessName() {
+		return processName;
+	}
+
+	public ResendConfig setProcessName(String processName) {
+		this.processName = processName;
+		return this;
+	}
+
+	public String getResendQueue() {
+		return resendQueue;
+	}
+
+	public ResendConfig setResendQueue(String resendQueue) {
+		this.resendQueue = resendQueue;
+		return this;
+	}
+
+	public List<ResendMessage> getResendMessages() {
+		return resendMessages;
+	}
+
+	public ResendConfig setResendMessages(List<ResendMessage> resendMessages) {
+		this.resendMessages = resendMessages;
+		return this;
+	}
+
+}

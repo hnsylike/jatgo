@@ -1,0 +1,63 @@
+#不同的运行环境指向不同的properties文件
+spring.profiles.active=${ATGO_ENV}
+#云之讯平台发送短信接口信息配置
+sms= false
+is_test=true
+rest_server=open.ucpaas.com
+sid=2395995ee2142a0b7b60ce4e907a31e8
+token=4865d27fe99e36726fe02359db4beb1a
+appid=51467c25fda545459da588ff228e0a7e
+templateid=298827
+atgo.db.url=jdbc:mysql://192.168.1.251:3306/ATGO_PROD?user=devwrite&password=atgoPass&useSSL=false&characterEncoding=utf-8
+
+jatgo.version=0.1
+
+mq.host = 192.168.1.251
+mq.port = 5672
+mq.username = kafangMQ
+mq.password = kafangMQpass
+
+mq.exchange.report.actual = FRBROKER
+mq.exchange.report.actual.bindQueues = BIZ_WEBSERVER, REC_WEBSERVER
+mq.queue.biz.webserver = BIZ_WEBSERVER
+
+mq.exchange.order.actual =TOBROKER
+mq.exchange.order.actual.bindQueues = BIZ_ADAPTOR, REC_ADAPTOR
+
+spring.jersey.application-path=/jatgo-service
+web.server.pid = 7
+
+server.port=17777
+
+jersey.swagger.enable=true
+swagger2.title=kafang trading system
+swagger2.description=web restful api,develop:https://github.com/swagger-api/swagger-core/wiki/Swagger-Core-Jersey-2.X-Project-Setup-1.5
+swagger2.companyUrl=http://www.kafangtech.com
+swagger2.author=jatgo developer
+swagger2.seeMoreAt=http://www.kafangtech.com
+swagger2.contactEmail=jatgo-dev@kafangtech.com
+swagger2.version=0.1
+swagger2.apiBasePackage=com.kafang.atgo.restful.resource
+
+#是否开启token校验，默认是开启的，如果开发者测试，可以设置为false
+atgo.token.enable=true
+# enable this option if wanna see detailed log
+# debug=true
+
+#ssl认证信息（https协议需要添加下面信息，如果要还原成http协议，请注释掉)
+server.ssl.key-store=classpath:keystore/keystore.p12
+server.ssl.key-store-password=123456
+server.ssl.keyStoreType=PKCS12
+server.ssl.keyAlias=tomcat
+
+logging.path=logs
+#添加账户，broker默认银河证券(yhzq)
+atgo.defult.broker=yhzq
+#添加账户，adaptorType默认TDX
+atgo.defult.adaptorType=TDX
+
+
+#登录校验开关
+login.username.enable=true
+login.phone.enable=true
+login.smsCode.enable=false

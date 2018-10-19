@@ -1,0 +1,355 @@
+package com.kafang.atgo.restful.resource;
+
+import com.kafang.atgo.persistence.db.entity.AgAccount;
+import com.kafang.atgo.restful.WebApp;
+import com.kafang.atgo.restful.dto.rep.ResponseTemplate;
+import com.kafang.atgo.restful.entity.*;
+import com.kafang.atgo.restful.sql.*;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
+import org.junit.Assert;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;
+
+
+/**
+ * Created by xuejian.sun on 2018/10/8.
+ */
+@Slf4j
+@RunWith(SpringRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SpringBootTest(classes = WebApp.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class UserRestfulApiTest extends AbstractBaseControllerTest {
+
+    @Value("${atgo.defult.broker}")
+    private String broker;
+
+    @Value("${atgo.defult.adaptorType}")
+    private String adaptorType;
+
+
+    @Override
+    protected String subPath() {
+        return "/user";
+    }
+
+    @UserManagerTables
+    @Test
+    public void findAll() {
+        ResponseTemplate<List<AgCustomer>> template = getForObj(
+                baseURL.toString() + "/queryCustomer",
+                new ParameterizedTypeReference<ResponseTemplate<List<AgCustomer>>>() {
+                });
+        Assert.assertEquals("请求错误，预期http状态码为200", 200,template.getHttpCode());
+        List<AgCustomer> responseEntity = template.getResponseEntity();
+        Assert.assertEquals("查询数据库数据出错", 2, responseEntity.size());
+        Assert.assertEquals("customer值错误","customer2",responseEntity.get(0).getCustomerName());
+        Assert.assertEquals("customer值错误","customer3",responseEntity.get(1).getCustomerName());
+    }
+
+    @UserManagerTables
+    @Test
+    public void getCustomer() {
+        ResponseTemplate<List<AgClient>> template = getForObj(
+                baseURL.toString() + "/getCustomer/{customerid}",
+                new ParameterizedTypeReference<ResponseTemplate<List<AgClient>>>() {
+                },2);
+        Assert.assertEquals("请求错误，预期http状态码为200", 200,template.getHttpCode());
+        List<AgClient> responseEntity = template.getResponseEntity();
+        Assert.assertEquals("查询数据库数据出错", 1, responseEntity.size());
+        AgClient agClient = responseEntity.get(0);
+        Assert.assertEquals("clientName 错误","clientTest",responseEntity.get(0).getClientName());
+        Assert.assertNull("FastJsonIgnore inoperative",agClient.getAdaptorPwd1());
+        Assert.assertNull("FastJsonIgnore inoperative",agClient.getAdaptorPwd2());
+        Assert.assertNull("FastJsonIgnore inoperative",agClient.getAdaptorPwd3());
+        Assert.assertTrue("adaptorUser1 cannot be null",StringUtils.isNotBlank(agClient.getAdaptorUser1()));
+        Assert.assertTrue("adaptorUser2 cannot be null",StringUtils.isNotBlank(agClient.getAdaptorUser2()));
+        Assert.assertTrue("adaptorUser3 cannot be null",StringUtils.isNotBlank(agClient.getAdaptorUser3()));
+        Assert.assertTrue("adaptorType cannot be null",StringUtils.isNotBlank(agClient.getAdaptorType()));
+        Assert.assertTrue(StringUtils.isNotBlank(agClient.getBroker()));
+        Assert.assertNotNull("clientId cannot be null",agClient.getClientId());
+        Assert.assertEquals(0,agClient.getIsCredit());
+    }
+
+    @UserManagerTables
+    @Test
+    public void getUser() {
+        ResponseTemplate<List<WsUser>> template = getForObj(
+                baseURL.toString() + "/getUser/{customerid}",
+                new ParameterizedTypeReference<ResponseTemplate<List<WsUser>>>() {
+                },2);
+        Assert.assertEquals("请求错误，预期http状态码为200", 200,template.getHttpCode());
+        List<WsUser> wsUsers =template.getResponseEntity();
+        Assert.assertEquals("查询数据库数据出错", 1, wsUsers.size());
+        WsUser wsUser = wsUsers.get(0);
+        Assert.assertEquals("username 错误","ws_user1",wsUsers.get(0).getUsername());
+        Assert.assertNull("FastJsonIgnore inoperative",wsUser.getPassword());
+        Assert.assertTrue("username cannot be null",StringUtils.isNotBlank(wsUser.getUsername()));
+        Assert.assertTrue(StringUtils.isNotBlank(wsUser.getRole()));
+    }
+
+    @UserManagerTables
+    @Test
+    public void getPhone() {
+        ResponseTemplate<List<WsPhone>> template=getForObj(baseURL.toString() + "/getPhone/{customerid}",
+                new ParameterizedTypeReference<ResponseTemplate<List<WsPhone>>>() {
+                },2);
+        Assert.assertEquals("请求错误，预期http状态码为200",200,template.getHttpCode());
+        List<WsPhone> wsPhones=template.getResponseEntity();
+        Assert.assertEquals("查询数据库出错",2,wsPhones.size());
+        WsPhone wsPhone=wsPhones.get(0);
+        Assert.assertEquals("phone错误","13111111111",wsPhone.getPhone());
+    }
+
+    @UserManagerTables
+    @Test
+    public void delCustomerUser() {
+        ResponseTemplate<Void> template=getForObj(baseURL.toString() + "/delCustomerUser/{id}",
+        new ParameterizedTypeReference<ResponseTemplate<Void>>() {
+        },1);
+        Assert.assertEquals("请求错误，预期http状态码为200",500,template.getHttpCode());
+    }
+
+    @UserManagerTables
+    @Test
+    public void delClient() {
+        ResponseTemplate<Void> template=getForObj(baseURL.toString() + "/delClient/{id}",
+                new ParameterizedTypeReference<ResponseTemplate<Void>>() {
+                },2);
+        Assert.assertEquals("请求错误，预期http状态码为200",200,template.getHttpCode());
+    }
+
+    @UserManagerTables
+    @Test
+    public void delCustomer() {
+        ResponseTemplate<Void> template=getForObj(baseURL.toString() + "/delCustomer/{id}",
+                new ParameterizedTypeReference<ResponseTemplate<Void>>() {
+                },1);
+        Assert.assertEquals("请求错误，预期http状态码为200",200,template.getHttpCode());
+    }
+
+    @UserManagerTables
+    @Test
+    public void delCustomerFail(){
+        ResponseTemplate<Void> template=getForObj(baseURL.toString() + "/delCustomer/{id}",
+                new ParameterizedTypeReference<ResponseTemplate<Void>>() {
+                },2);
+        assertThat(template.getHttpCode(),equalTo(500));
+        assertThat(template.getErrorMsg(),is("WS_USER_CUSTOMER_MP表中还有关联数据,删除失败"));
+    }
+
+    @UserManagerTables
+    @Test
+    public void addCustomer() {
+        ResponseTemplate<Void> template=getForObj(baseURL.toString() + "/addCustomer/{customerName}",
+                new ParameterizedTypeReference<ResponseTemplate<Void>>() {
+                },"customer1");
+        Assert.assertEquals("请求错误，预期http状态码为200",200,template.getHttpCode());
+    }
+
+
+    @CleanUserTable
+    @CleanPhoneTable
+    @CleanUserCustomerMpTable
+    @Test
+    public void addUser() {
+        WsUser wsUser = new WsUser();
+        wsUser.setPassword("123456");
+        wsUser.setRole("trader");
+        wsUser.setUsername("testInsert");
+        wsUser.setPhone("13111111111");
+        wsUser.setCustomerId(17L);
+
+        ResponseTemplate<Void> template = postForObj(baseURL.toString() + "/addUser", wsUser
+                , new ParameterizedTypeReference<ResponseTemplate<Void>>() {
+                });
+
+        assertThat(template.getHttpCode(),equalTo(200));
+        WsUser dbUser = jdbcTemplate.queryForObject("select * from WS_USER limit 1", newRowMapper(WsUser.class));
+        assertThat(dbUser.getUsername(),is(wsUser.getUsername()));
+        assertThat(dbUser.getUserid(),equalTo(1L));
+        assertThat(dbUser.getId(),equalTo(1L));
+        assertThat(dbUser.getRole(),is(wsUser.getRole()));
+        assertThat(dbUser.getPassword(),not(wsUser.getPassword()));
+
+        //check phone table
+        WsPhone wsPhone = jdbcTemplate.queryForObject("select * from WS_PHONE limit 1", newRowMapper(WsPhone.class));
+        assertThat(wsPhone.getUserId(),equalTo(1L));
+        assertThat(wsPhone.getPhone(),is("13111111111"));
+        assertThat(wsPhone.getId(),equalTo(1L));
+
+        //check ws_user_customer_mp table
+        WsUserCustomerMp customerMp = jdbcTemplate.queryForObject("select * from WS_USER_CUSTOMER_MP limit 1", newRowMapper(WsUserCustomerMp.class));
+        assertThat(customerMp.getId(),equalTo(1L));
+        assertThat(customerMp.getUserId(),equalTo(1L));
+        assertThat(customerMp.getCustomerId(),equalTo(17L));
+
+        //已存在用户的情况下在插入一条相同的数据
+        ResponseTemplate<Void> template1 = postForObj(baseURL.toString() + "/addUser", wsUser
+                , new ParameterizedTypeReference<ResponseTemplate<Void>>() {
+                });
+
+        assertThat(template1.getHttpCode(),equalTo(400));
+
+        assertThat(template1.getErrorMsg(),equalToIgnoringWhiteSpace("添加失败,该用户已经存在!"));
+
+        //已存在用户的情况下在插入一条不一样的的数据,测试另一个else分支代码是否生效
+        WsUser clone = wsUser.clone();
+        clone.setUsername("clone");
+        clone.setPhone("13111111112");
+        ResponseTemplate<Void> template2 = postForObj(baseURL.toString() + "/addUser", clone
+                , new ParameterizedTypeReference<ResponseTemplate<Void>>() {
+                });
+
+        assertThat(template2.getHttpCode(),equalTo(200));
+
+        WsUser dbUser2 = jdbcTemplate.queryForObject("select * from WS_USER where username='clone'", newRowMapper(WsUser.class));
+
+        assertThat(dbUser2,notNullValue());
+        assertThat(dbUser2.getUserid(),equalTo(2L));
+        assertThat(dbUser2.getId(),equalTo(2L));
+
+        WsPhone wsPhone2 = jdbcTemplate.queryForObject("select * from WS_PHONE where userId='2'", newRowMapper(WsPhone.class));
+        assertThat(wsPhone2,notNullValue());
+        assertThat(wsPhone2.getUserId(),equalTo(2L));
+        assertThat(wsPhone2.getPhone(),is("13111111112"));
+        assertThat(wsPhone2.getId(),equalTo(2L));
+
+        WsUserCustomerMp customerMp2 = jdbcTemplate.queryForObject("select * from WS_USER_CUSTOMER_MP where UserID='2'", newRowMapper(WsUserCustomerMp.class));
+        assertThat(customerMp2.getId(),equalTo(2L));
+        assertThat(customerMp2.getUserId(),equalTo(2L));
+        assertThat(customerMp2.getCustomerId(),equalTo(17L));
+    }
+
+    @CleanAccountTable
+    @CleanClientTable
+    @Test
+    public void addClient() {
+        AgClient agClient = new AgClient();
+        agClient.setAdaptorPwd1("123456");
+        agClient.setAdaptorPwd2("123456");
+        agClient.setAdaptorPwd3("123456");
+        agClient.setAdaptorUser1("user1");
+        agClient.setAdaptorUser2("user2");
+        agClient.setAdaptorUser3("user3");
+        agClient.setClientName("clientTest");
+        agClient.setCustomerId(17L);
+        agClient.setIsCredit(1);
+
+        ResponseTemplate<Void> template = postForObj(baseURL.toString() + "/addClient", agClient
+                , new ParameterizedTypeReference<ResponseTemplate<Void>>() {
+                });
+        assertThat(template.getHttpCode(),equalTo(200));
+
+        AgClient agClientDb = jdbcTemplate.queryForObject("select * from AG_CLIENT limit 1", newRowMapper(AgClient.class));
+        assertThat(agClientDb,notNullValue());
+        assertThat(agClientDb.getClientName(),equalTo(agClient.getClientName()));
+        assertThat(agClientDb.getCustomerId(),equalTo(agClient.getCustomerId()));
+        assertThat(agClientDb.getAdaptorPwd1(),equalTo(agClient.getAdaptorPwd1()));
+        assertThat(agClientDb.getAdaptorPwd2(),equalTo(agClient.getAdaptorPwd2()));
+        assertThat(agClientDb.getAdaptorPwd3(),equalTo(agClient.getAdaptorPwd3()));
+        assertThat(agClientDb.getAdaptorUser1(),equalTo(agClient.getAdaptorUser1()));
+        assertThat(agClientDb.getAdaptorUser2(),equalTo(agClient.getAdaptorUser2()));
+        assertThat(agClientDb.getAdaptorUser3(),equalTo(agClient.getAdaptorUser3()));
+        assertThat(agClientDb.getIsCredit(),equalTo(agClient.getIsCredit()));
+        assertThat(agClientDb.getBroker(),equalTo(broker));
+        assertThat(agClientDb.getAdaptorType(),equalTo(adaptorType));
+        assertThat(agClientDb.getClientId(),equalTo(1));
+        assertThat(agClientDb.getId(),equalTo(1L));
+
+        AgAccount account = jdbcTemplate.queryForObject("select * from AG_ACCOUNT limit 1", newRowMapper(AgAccount.class));
+        assertThat(agClientDb,notNullValue());
+        assertThat(account.getId(),equalTo(1L));
+        assertThat(account.getAccountId(),equalTo(1));
+        assertThat(account.isActive(),equalTo(false));
+        assertThat(account.getClientId(),equalTo(1));
+
+        // 在插入一条
+        AgClient clone = agClient.clone();
+
+        ResponseTemplate<Void> template1 = postForObj(baseURL.toString() + "/addClient", clone
+                , new ParameterizedTypeReference<ResponseTemplate<Void>>() {
+                });
+        assertThat(template1.getHttpCode(),equalTo(200));
+        AgClient agClientDb1 = jdbcTemplate.queryForObject("select * from AG_CLIENT where ClientID = '2'", newRowMapper(AgClient.class));
+        assertThat(agClientDb1,notNullValue());
+        assertThat(agClientDb1.getCustomerId(),equalTo(17L));
+        assertThat(agClientDb1.getClientId(),equalTo(2));
+        assertThat(agClientDb1.getId(),equalTo(2L));
+
+        AgAccount account1 = jdbcTemplate.queryForObject("select * from AG_ACCOUNT where AccountID = '2'", newRowMapper(AgAccount.class));
+        assertThat(account1,notNullValue());
+        assertThat(account1.getId(),equalTo(2L));
+        assertThat(account1.getAccountId(),equalTo(2));
+        assertThat(account1.isActive(),equalTo(false));
+        assertThat(account1.getClientId(),equalTo(2));
+    }
+
+    @UserManagerTables
+    @Test
+    public void findCustomer() {
+        ResponseTemplate<List<AgClient>> template=getForObj(baseURL.toString() + "/findCustomer/{userid}",
+                new ParameterizedTypeReference<ResponseTemplate<List<AgClient>>>() {
+                },1);
+        Assert.assertEquals("请求错误，预期http状态码为200",200,template.getHttpCode());
+        List<AgClient> agClients=template.getResponseEntity();
+        Assert.assertEquals("查询数据库出错",1,agClients.size());
+        AgClient agClient=agClients.get(0);
+        Assert.assertEquals("clientname错误","clientTest",agClient.getClientName());
+        Assert.assertNull("FastJsonIgnore inoperative",agClient.getAdaptorPwd1());
+        Assert.assertNull("FastJsonIgnore inoperative",agClient.getAdaptorPwd2());
+        Assert.assertNull("FastJsonIgnore inoperative",agClient.getAdaptorPwd3());
+        Assert.assertTrue("adaptorUser1 cannot be null",StringUtils.isNotBlank(agClient.getAdaptorUser1()));
+        Assert.assertTrue("adaptorUser2 cannot be null",StringUtils.isNotBlank(agClient.getAdaptorUser2()));
+        Assert.assertTrue("adaptorUser3 cannot be null",StringUtils.isNotBlank(agClient.getAdaptorUser3()));
+        Assert.assertTrue("adaptorType cannot be null",StringUtils.isNotBlank(agClient.getAdaptorType()));
+        Assert.assertTrue(StringUtils.isNotBlank(agClient.getBroker()));
+        Assert.assertNotNull("clientId cannot be null",agClient.getClientId());
+        Assert.assertEquals(0,agClient.getIsCredit());
+    }
+
+    @UserManagerTables
+    @Test
+    public void findStrategy() {
+        ResponseTemplate<List<AgAccount>> template=getForObj(baseURL.toString() + "/findStrategy/{clientId}",
+                new ParameterizedTypeReference<ResponseTemplate<List<AgAccount>>>() {
+                },1);
+        Assert.assertEquals("请求错误，预期http状态码为200",200,template.getHttpCode());
+        List<AgAccount> agAccounts=template.getResponseEntity();
+        Assert.assertEquals("查询数据库出错",1,agAccounts.size());
+        AgAccount agClient=agAccounts.get(0);
+        Assert.assertEquals("clientId错误",1,agClient.getClientId());
+        Assert.assertNotNull("strategyId cannot be null",agClient.getStrategyId());
+        Assert.assertEquals(2001,agClient.getStrategyId());
+    }
+
+    @UserManagerTables
+    @Test
+    public void checkPhone() {
+        ResponseTemplate<Void> template=getForObj(baseURL.toString() + "/check/{phone}/{username}",
+                new ParameterizedTypeReference<ResponseTemplate<Void>>() {
+                },"13111111112","ws_user1");
+        Assert.assertEquals("请求错误，预期http状态码为200",200,template.getHttpCode());
+    }
+
+    @Test
+    public void checkPhoneFail() {
+        ResponseTemplate<Void> template=getForObj(baseURL.toString() + "/check/{phone}/{username}",
+                new ParameterizedTypeReference<ResponseTemplate<Void>>() {
+                },"13111111114","ws_user1");
+        assertThat(template.getHttpCode(),equalTo(400));
+        assertThat(template.getErrorMsg(),is("该用户没有这个手机号"));
+    }
+}

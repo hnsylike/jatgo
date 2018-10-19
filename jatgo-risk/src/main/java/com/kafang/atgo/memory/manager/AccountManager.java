@@ -1,0 +1,87 @@
+package com.kafang.atgo.memory.manager;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.annotation.PostConstruct;
+
+import org.eclipse.collections.api.map.primitive.MutableIntIntMap;
+import org.eclipse.collections.api.multimap.set.MutableSetMultimap;
+import org.eclipse.collections.api.set.MutableSet;
+import org.eclipse.collections.impl.map.mutable.primitive.IntIntHashMap;
+import org.eclipse.collections.impl.multimap.set.UnifiedSetMultimap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.kafang.atgo.AtgoException;
+import com.kafang.atgo.persistence.db.dao.api.AgAccountDao;
+import com.kafang.atgo.persistence.db.entity.AgAccount;
+
+import io.ffreedom.common.log.UseLogger;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Component
+public final class AccountManager {
+
+	// public static final AccountManager INSTANCE = new AccountManager();
+
+	private MutableIntIntMap accountClientMap = new IntIntHashMap();
+
+	private MutableIntIntMap accountStrategyMap = new IntIntHashMap();
+
+	private MutableSetMultimap<Integer, Integer> clientAccountMap = new UnifiedSetMultimap<>();
+
+	private MutableSetMultimap<Integer, Integer> strategyAccountMap = new UnifiedSetMultimap<>();
+
+	private boolean isInit;
+
+	@Autowired
+	private AgAccountDao agAccountDao;
+
+	@PostConstruct
+	public void init() {
+		Optional<List<AgAccount>> selected = agAccountDao.selectAll();
+		log.info("AccountManager start initialization...");
+		this.isInit = selected.map(agAccountList -> agAccountList.stream().mapToInt(account -> {
+			try {
+				accountClientMap.put(account.getAccountId(), account.getClientId());
+				accountStrategyMap.put(account.getAccountId(), account.getStrategyId());
+				clientAccountMap.put(account.getClientId(), account.getAccountId());
+				strategyAccountMap.put(account.getStrategyId(), account.getAccountId());
+				log.info("Bind accountId -> {}, To clientId -> {}", account.getAccountId(), account.getClientId());
+				log.info("Bind accountId -> {}, To strategyId -> {}", account.getAccountId(), account.getStrategyId());
+				return 0;
+			} catch (Exception e) {
+				UseLogger.error(log, e);
+				return 1;
+			}
+		}).sum() == 0 ? true : false).orElse(false);
+		log.info("AccountManager initialized...");
+		log.info("isInit == {}", isInit);
+		if (!isInit) {
+			throw new AtgoException("AccountManager initialization failed!");
+		}
+	}
+
+	public int getClientId(int accountId) {
+		return accountClientMap.containsKey(accountId) ? accountClientMap.get(accountId) : -1;
+	}
+
+	public int getStrategyId(int accountId) {
+		return accountStrategyMap.containsKey(accountId) ? accountStrategyMap.get(accountId) : -1;
+	}
+
+	public MutableSet<Integer> getAccountId4ClientId(int clientId) {
+		return clientAccountMap.get(clientId);
+	}
+
+	public MutableSet<Integer> getAccountId4StrategyId(int strategyId) {
+		return strategyAccountMap.get(strategyId);
+	}
+
+	public static void main(String[] args) {
+
+	}
+
+}

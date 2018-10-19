@@ -1,0 +1,29 @@
+package com.kafang.atgo.bean.fix.enums;
+
+import com.kafang.atgo.bean.fix.base.FixEnum;
+
+public enum CxlRejReason implements FixEnum {
+
+	Invalid(-1),
+
+	TooLate(0),
+
+	UnknownOrder(1),
+
+	BrokerOption(2),
+
+	AlreadyPend(3),
+
+	;
+
+	private int code;
+
+	private CxlRejReason(int code) {
+		this.code = code;
+	}
+
+	public int code() {
+		return code;
+	}
+
+}

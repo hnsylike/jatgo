@@ -1,0 +1,30 @@
+-- 初始化 customer表 合client表
+insert into AG_CUSTOMER values ('1','2','customer2');
+insert into AG_CUSTOMER values ('2','3','customer3');
+
+INSERT INTO AG_CLIENT
+  (`ID`, `ClientID`, `ClientName`,
+   `Broker`, `IsCredit`, `AdaptorType`,
+    `AdaptorUser1`, `AdaptorUser2`, `AdaptorUser3`,
+     `AdaptorPwd1`, `AdaptorPwd2`, `AdaptorPwd3`, `CustomerID`)
+VALUES ('1', '1', 'clientTest', 'gtja', '0', 'TDX', 'user1', 'user2', 'user3', '1234', '1234', '1234', '2');
+
+
+insert into WS_USER_CUSTOMER_MP values ('1','1','2');
+
+insert into WS_USER_CUSTOMER_MP values ('2','1','3');
+
+
+insert into WS_USER values ('1','1','ws_user1','123456','trader');
+
+insert into WS_PHONE values ('1','13111111111',1);
+
+insert into WS_PHONE values ('2','13111111112',1);
+
+insert into AG_ACCOUNT values ('1','10001','1','1','2001','0','0');
+
+
+
+
+
+

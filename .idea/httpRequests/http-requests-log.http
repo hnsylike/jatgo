@@ -1,0 +1,430 @@
+GET http://localhost:12345/jatgo-service/user/queryCustomer
+Accept: */*
+Cache-Control: no-cache
+Authorization: token fe47559e2d268c9dee2f1d80c8f09c34
+
+<> 2018-09-28T060948-1.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/queryCustomer
+Accept: */*
+Cache-Control: no-cache
+Authorization: token fe47559e2d268c9dee2f1d80c8f09c34
+
+<> 2018-09-28T060948.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/queryCustomer
+Accept: */*
+Cache-Control: no-cache
+Authorization: token fe47559e2d268c9dee2f1d80c8f09c34
+
+<> 2018-09-28T055548.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/queryCustomer
+Accept: */*
+Cache-Control: no-cache
+Authorization: token fe47559e2d268c9dee2f1d80c8f09c34
+
+<> 2018-09-28T055513.200.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/queryCustomer
+Accept: */*
+Cache-Control: no-cache
+Authorization: token fe47559e2d268c9dee2f1d80c8f09c34
+
+<> 2018-09-28T055335.200.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/queryCustomer
+Accept: */*
+Cache-Control: no-cache
+Authorization: token fe47559e2d268c9dee2f1d80c8f09c34
+
+<> 2018-09-28T055323.200.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/queryCustomer
+Accept: */*
+Cache-Control: no-cache
+Authorization: token fe47559e2d268c9dee2f1d80c8f09c34
+
+<> 2018-09-28T054528.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/queryCustomer
+Accept: */*
+Cache-Control: no-cache
+Authorization: token fe47559e2d268c9dee2f1d80c8f09c34
+
+<> 2018-09-28T054326.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/queryCustomer
+Accept: */*
+Cache-Control: no-cache
+Authorization: token fe47559e2d268c9dee2f1d80c8f09c34
+
+###
+
+GET http://localhost:12345/jatgo-service/user/queryCustomer
+Accept: */*
+Cache-Control: no-cache
+Authorization: token fe47559e2d268c9dee2f1d80c8f09c34
+
+<> 2018-09-28T053904.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/queryCustomer
+Accept: */*
+Cache-Control: no-cache
+Authorization: token fe47559e2d268c9dee2f1d80c8f09c34
+
+###
+
+GET http://localhost:12345/jatgo-service/user/queryCustomer
+Accept: */*
+Cache-Control: no-cache
+Authorization: token fe47559e2d268c9dee2f1d80c8f09c34
+
+<> 2018-09-28T053459.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/queryCustomer
+Accept: */*
+Cache-Control: no-cache
+Authorization: token fe47559e2d268c9dee2f1d80c8f09c34
+
+<> 2018-09-28T053409.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/queryCustomer
+Accept: */*
+Cache-Control: no-cache
+Authorization: token fe47559e2d268c9dee2f1d80c8f09c34
+
+<> 2018-09-28T121827.500.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/queryCustomer
+Accept: */*
+Cache-Control: no-cache
+Authorization: token bf408210bd5b502a60c5b0a3fc4780b5
+
+<> 2018-09-28T121755.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/queryCustomer
+Accept: */*
+Cache-Control: no-cache
+Authorization: token bf408210bd5b502a60c5b0a3fc4780b5
+
+<> 2018-09-28T114447.500.json
+
+###
+
+GET http://localhost:12345/user/queryCustomer
+Accept: */*
+Cache-Control: no-cache
+Authorization: token bf408210bd5b502a60c5b0a3fc4780b5
+
+<> 2018-09-28T114416.404.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token bf408210bd5b502a60c5b0a3fc4780b5
+
+<> 2018-09-28T114405.200.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token bf408210bd5b502a60c5b0a3fc4780b5
+
+<> 2018-09-28T114356.200.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token bf408210bd5b502a60c5b0a3fc4780b5
+
+<> 2018-09-28T114344.200.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token bf408210bd5b502a60c5b0a3fc4780b5
+
+<> 2018-09-28T114341.200.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token bf408210bd5b502a60c5b0a3fc4780b5
+
+<> 2018-09-28T114336.200.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T114244.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T114242.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T114146.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T114126.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T114120.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T113326.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T112655.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T112647.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T111552.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T105718.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T105715.400.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T101156.401.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token=c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T100001.401.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token=c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T095237.401.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token=c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T095224.401.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token=c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T094303.401.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token=c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T094223.401.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token=c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-28T093052.401.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token=c83415cbb58b3ff91501386acb8faf17
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token=c83415cbb58b3ff91501386acb8faf17
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token=c83415cbb58b3ff91501386acb8faf17
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token=c83415cbb58b3ff91501386acb8faf17
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token=c83415cbb58b3ff91501386acb8faf17
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token=c83415cbb58b3ff91501386acb8faf17
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token=c83415cbb58b3ff91501386acb8faf17
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token=c83415cbb58b3ff91501386acb8faf17
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token=c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-27T085507.500.json
+
+###
+
+GET http://localhost:12345/jatgo-service/user/findCustomer/7
+Accept: */*
+Cache-Control: no-cache
+Authorization: token=c83415cbb58b3ff91501386acb8faf17
+
+<> 2018-09-27T085345.500.json
+
+###
+

@@ -1,0 +1,27 @@
+#云之讯平台发送短信接口信息配置
+is_test=true
+rest_server=open.ucpaas.com
+sid=2395995ee2142a0b7b60ce4e907a31e8
+token=4865d27fe99e36726fe02359db4beb1a
+appid=51467c25fda545459da588ff228e0a7e
+templateid=298827
+atgo.db.url=jdbc:mysql://192.168.1.251:3306/ATGO_TEST?user=devwrite&password=atgoPass&useSSL=false&characterEncoding=utf-8
+
+server.port=
+
+mq.host = localhost
+mq.port = 5672
+mq.username = guest
+mq.password = guest
+
+mq.exchange.order.actual =TOBROKER
+mq.exchange.order.actual.bindQueues = BIZ_ADAPTOR, REC_ADAPTOR
+
+spring.jersey.application-path=/jatgo-service
+
+jersey.swagger.enable=false
+
+#是否开启token校验，默认是开启的，如果开发者测试，可以设置为false
+atgo.token.enable=false
+
+server.ssl.enabled=false

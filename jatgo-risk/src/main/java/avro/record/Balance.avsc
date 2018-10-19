@@ -1,0 +1,25 @@
+[
+    {
+        "namespace": "com.kafang.atgo.memory.avro.record",
+        "type": "record",
+        "name": "Balance",
+        "fields": [
+            {
+                "name": "clientId",
+                "type": "int"
+            },
+            {
+                "name": "accountId",
+                "type": "int"
+            },
+            {
+                "name": "enableBalance",
+                "type": "double"
+            },
+            {
+                "name": "creditBalance",
+                "type": "double"
+            }
+        ]
+    }
+]

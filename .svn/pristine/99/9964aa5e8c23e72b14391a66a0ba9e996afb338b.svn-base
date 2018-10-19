@@ -1,0 +1,17 @@
+processName,fanout
+Adaptor,TOBROKER
+WebServer,TOCLIENT
+BackMod,TOBROKER
+BackMod,FRCLIENT
+BackMod,TOCENSOR
+BackMod,FRMARKET
+BackMod,TOCLIENT
+BackMod,FRBROKER
+BackMod,FRCENSOR
+BackMod,TOBACKUP
+RiskMod,FRBROKER
+RiskMod,TOCENSOR
+SimulExch,TOBROKER
+SimulExch,FRMARKET
+StratMod,FRCENSOR
+StratMod,FRCLIENT

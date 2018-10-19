@@ -1,0 +1,99 @@
+package com.kafang.atgo.restful.resource;
+
+import com.kafang.atgo.restful.WebApp;
+import com.kafang.atgo.restful.dto.rep.ResponseTemplate;
+import com.kafang.atgo.restful.entity.AgCustomer;
+import com.kafang.atgo.restful.sql.CustomerSql;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
+
+
+/**
+ * Created by xuejian.sun on 2018/10/8.
+ */
+@Slf4j
+@RunWith(SpringRunner.class)
+@FixMethodOrder
+@SpringBootTest(classes = WebApp.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class UserRestfulApiTest extends AbstractBaseControllerTest {
+
+
+    @Override
+    protected String subPath() {
+        return "/user";
+    }
+
+    @CustomerSql
+    @Test
+    public void findAll() {
+        ResponseTemplate<List<AgCustomer>> template = getForObj(
+                baseURL.toString() + "/queryCustomer",
+                new ParameterizedTypeReference<ResponseTemplate<List<AgCustomer>>>() {
+                });
+        Assert.assertTrue("请求错误，预期http状态码为200", template.getHttpCode() == 200);
+        List<AgCustomer> responseEntity = template.getResponseEntity();
+        Assert.assertEquals("查询数据库数据出错", 1, responseEntity.size());
+        Assert.assertEquals("customer值错误","demo",responseEntity.get(0).getCustomerName());
+    }
+
+
+    @Test
+    public void getCustomer() {
+    }
+
+    @Test
+    public void getUser() {
+    }
+
+    @Test
+    public void getphone() {
+    }
+
+    @Test
+    public void delCustomerUser() {
+    }
+
+    @Test
+    public void delClient() {
+    }
+
+    @Test
+    public void delCustomer() {
+    }
+
+    @Test
+    public void getid() {
+    }
+
+    @Test
+    public void addCustomer() {
+    }
+
+    @Test
+    public void addUser() {
+    }
+
+    @Test
+    public void addClient() {
+    }
+
+    @Test
+    public void findCustomer() {
+    }
+
+    @Test
+    public void findStrategy() {
+    }
+
+    @Test
+    public void checkPhone() {
+    }
+}

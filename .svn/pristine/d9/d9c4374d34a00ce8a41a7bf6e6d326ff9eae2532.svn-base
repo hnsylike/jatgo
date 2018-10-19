@@ -1,0 +1,362 @@
+package com.kafang.atgo.bean.fix;
+
+import java.time.LocalDateTime;
+
+import com.kafang.atgo.bean.fix.enums.MsgType;
+import lombok.ToString;
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.MutableMap;
+
+import com.kafang.atgo.bean.fix.base.BaseFixBean;
+import com.kafang.atgo.bean.fix.base.BizOrder;
+import com.kafang.atgo.bean.fix.base.FixMessage;
+import com.kafang.atgo.bean.fix.base.FixMessageAnalysisException;
+import com.kafang.atgo.bean.fix.field.FixOrderField;
+import com.kafang.atgo.bean.fix.field.collect.FixFieldLists;
+
+@ToString
+public final class FixOrder extends BaseFixBean<FixOrderField> implements Comparable<FixOrder>, BizOrder {
+
+	private LocalDateTime sendingTime;
+	private long clOrdId;
+	private int clientId;
+	private int accountId;
+	private int handlInst;
+	private long quoteId;
+	private int symbol;
+	private int securityType;
+	private int securityExchange;
+	private int side;
+	private LocalDateTime transactTime;
+	private int orderQty;
+	private int ordType;
+	private double price;
+	private LocalDateTime effectiveTime;
+	private LocalDateTime expireTime;
+	private long execId;
+	private String orderId;
+	private int cumQty;
+	private int leavesQty;
+	private double avgPx;
+	private int ordStatus;
+	private int limitAction;
+	private int afterAction;
+	private String text;
+
+	private FixOrder(MsgType msgType) {
+		super(msgType);
+	}
+
+	public FixOrder(FixMessage message) throws FixMessageAnalysisException {
+		super(message);
+	}
+
+	public static FixOrder buildFixOrder() {
+		return new FixOrder(MsgType.Order);
+	}
+
+	public static FixOrder buildFixOrderReport() {
+		return new FixOrder(MsgType.OrderReport);
+	}
+
+	public LocalDateTime getSendingTime() {
+		return sendingTime;
+	}
+
+	public FixOrder setSendingTime(LocalDateTime sendingTime) {
+		this.sendingTime = sendingTime;
+		return this;
+	}
+
+	public long getClOrdId() {
+		return clOrdId;
+	}
+
+	public FixOrder setClOrdId(long clOrdId) {
+		this.clOrdId = clOrdId;
+		return this;
+	}
+
+	public int getClientId() {
+		return clientId;
+	}
+
+	public FixOrder setClientId(int clientId) {
+		this.clientId = clientId;
+		return this;
+	}
+
+	public int getAccountId() {
+		return accountId;
+	}
+
+	public FixOrder setAccountId(int accountId) {
+		this.accountId = accountId;
+		return this;
+	}
+
+	public int getHandlInst() {
+		return handlInst;
+	}
+
+	public FixOrder setHandlInst(int handlInst) {
+		this.handlInst = handlInst;
+		return this;
+	}
+
+	public long getExecId() {
+		return execId;
+	}
+
+	public FixOrder setExecId(long execId) {
+		this.execId = execId;
+		return this;
+	}
+
+	public int getSymbol() {
+		return symbol;
+	}
+
+	public FixOrder setSymbol(int symbol) {
+		this.symbol = symbol;
+		return this;
+	}
+
+	public int getSecurityType() {
+		return securityType;
+	}
+
+	public FixOrder setSecurityType(int securityType) {
+		this.securityType = securityType;
+		return this;
+	}
+
+	public int getSecurityExchange() {
+		return securityExchange;
+	}
+
+	public FixOrder setSecurityExchange(int securityExchange) {
+		this.securityExchange = securityExchange;
+		return this;
+	}
+
+	public int getSide() {
+		return side;
+	}
+
+	public FixOrder setSide(int side) {
+		this.side = side;
+		return this;
+	}
+
+	public LocalDateTime getTransactTime() {
+		return transactTime;
+	}
+
+	public FixOrder setTransactTime(LocalDateTime transactTime) {
+		this.transactTime = transactTime;
+		return this;
+	}
+
+	public int getOrderQty() {
+		return orderQty;
+	}
+
+	public FixOrder setOrderQty(int orderQty) {
+		this.orderQty = orderQty;
+		return this;
+	}
+
+	public int getOrdType() {
+		return ordType;
+	}
+
+	public FixOrder setOrdType(int ordType) {
+		this.ordType = ordType;
+		return this;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public FixOrder setPrice(double price) {
+		this.price = price;
+		return this;
+	}
+
+	public LocalDateTime getEffectiveTime() {
+		return effectiveTime;
+	}
+
+	public FixOrder setEffectiveTime(LocalDateTime effectiveTime) {
+		this.effectiveTime = effectiveTime;
+		return this;
+	}
+
+	public LocalDateTime getExpireTime() {
+		return expireTime;
+	}
+
+	public FixOrder setExpireTime(LocalDateTime expireTime) {
+		this.expireTime = expireTime;
+		return this;
+	}
+
+	public long getQuoteId() {
+		return quoteId;
+	}
+
+	public FixOrder setQuoteId(long quoteId) {
+		this.quoteId = quoteId;
+		return this;
+	}
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public FixOrder setOrderId(String orderId) {
+		this.orderId = orderId;
+		return this;
+	}
+
+	public int getCumQty() {
+		return cumQty;
+	}
+
+	public FixOrder setCumQty(int cumQty) {
+		this.cumQty = cumQty;
+		return this;
+	}
+
+	public int getLeavesQty() {
+		return leavesQty;
+	}
+
+	public FixOrder setLeavesQty(int leavesQty) {
+		this.leavesQty = leavesQty;
+		return this;
+	}
+
+	public double getAvgPx() {
+		return avgPx;
+	}
+
+	public FixOrder setAvgPx(double avgPx) {
+		this.avgPx = avgPx;
+		return this;
+	}
+
+	public int getOrdStatus() {
+		return ordStatus;
+	}
+
+	public FixOrder setOrdStatus(int ordStatus) {
+		this.ordStatus = ordStatus;
+		return this;
+	}
+
+	public int getLimitAction() {
+		return limitAction;
+	}
+
+	public FixOrder setLimitAction(int limitAction) {
+		this.limitAction = limitAction;
+		return this;
+	}
+
+	public int getAfterAction() {
+		return afterAction;
+	}
+
+	public FixOrder setAfterAction(int afterAction) {
+		this.afterAction = afterAction;
+		return this;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public FixOrder setText(String text) {
+		this.text = text;
+		return this;
+	}
+
+	/**
+	 * OrderSet 唯一性识别, 当Symbol, Price, Qty, SendingTime都相同时, 判断为同一个订单.
+	 * <p>
+	 * Set排序算法.
+	 */
+	@Override
+	public int compareTo(FixOrder o) {
+		return this.clOrdId < o.clOrdId ? -1 : this.clOrdId > o.clOrdId ? 1 : 0;
+	}
+
+	@Override
+	public ImmutableList<FixOrderField> getFixFields() {
+		return FixFieldLists.FixOrderFields;
+	}
+
+	@Override
+	protected void setAttributes() {
+		setSendingTime((LocalDateTime) getValue(FixOrderField.SendingTime).orElse(null));
+		setClOrdId((long) getValue(FixOrderField.ClOrdID).get());
+		setClientId((int) getValue(FixOrderField.ClientID).get());
+		setAccountId((int) getValue(FixOrderField.AccountID).get());
+		setHandlInst((int) getValue(FixOrderField.HandlInst).get());
+		setQuoteId((long) getValue(FixOrderField.QuoteID).get());
+		setSymbol((int) getValue(FixOrderField.Symbol).get());
+		setSecurityType((int) getValue(FixOrderField.SecurityType).get());
+		setSecurityExchange((int) getValue(FixOrderField.SecurityExchange).get());
+		setSide((int) getValue(FixOrderField.Side).get());
+		setTransactTime((LocalDateTime) getValue(FixOrderField.TransactTime).orElse(null));
+		setOrderQty((int) getValue(FixOrderField.OrderQty).get());
+		setOrdType((int) getValue(FixOrderField.OrdType).get());
+		setPrice((double) getValue(FixOrderField.Price).get());
+		setEffectiveTime((LocalDateTime) getValue(FixOrderField.EffectiveTime).orElse(null));
+		setExpireTime((LocalDateTime) getValue(FixOrderField.ExpireTime).orElse(null));
+		setExecId((long) getValue(FixOrderField.ExecID).get());
+		setOrderId((String) getValue(FixOrderField.OrderID).orElse(null));
+		setCumQty((int) getValue(FixOrderField.CumQty).get());
+		setLeavesQty((int) getValue(FixOrderField.LeavesQty).get());
+		setAvgPx((double) getValue(FixOrderField.AvgPx).get());
+		setOrdStatus((int) getValue(FixOrderField.OrdStatus).get());
+		setLimitAction((int) getValue(FixOrderField.LimitAction).orElse(0));
+		setAfterAction((int) getValue(FixOrderField.AfterAction).orElse(0));
+		setText((String) getValue(FixOrderField.Text).orElse(null));
+	}
+
+	@Override
+	protected MutableMap<FixOrderField, Object> attributesToMap() {
+		MutableMap<FixOrderField, Object> map = newMap();
+		map.put(FixOrderField.SendingTime, getSendingTime());
+		map.put(FixOrderField.ClOrdID, getClOrdId());
+		map.put(FixOrderField.ClientID, getClientId());
+		map.put(FixOrderField.AccountID, getAccountId());
+		map.put(FixOrderField.HandlInst, getHandlInst());
+		map.put(FixOrderField.QuoteID, getQuoteId());
+		map.put(FixOrderField.Symbol, getSymbol());
+		map.put(FixOrderField.SecurityType, getSecurityType());
+		map.put(FixOrderField.SecurityExchange, getSecurityExchange());
+		map.put(FixOrderField.Side, getSide());
+		map.put(FixOrderField.TransactTime, getTransactTime());
+		map.put(FixOrderField.OrderQty, getOrderQty());
+		map.put(FixOrderField.OrdType, getOrdType());
+		map.put(FixOrderField.Price, getPrice());
+		map.put(FixOrderField.EffectiveTime, getEffectiveTime());
+		map.put(FixOrderField.ExpireTime, getExpireTime());
+		map.put(FixOrderField.ExecID, getExecId());
+		map.put(FixOrderField.OrderID, getOrderId());
+		map.put(FixOrderField.CumQty, getCumQty());
+		map.put(FixOrderField.LeavesQty, getLeavesQty());
+		map.put(FixOrderField.AvgPx, getAvgPx());
+		map.put(FixOrderField.OrdStatus, getOrdStatus());
+		map.put(FixOrderField.LimitAction, getLimitAction());
+		map.put(FixOrderField.AfterAction, getAfterAction());
+		map.put(FixOrderField.Text, getText());
+		return map;
+	}
+
+}

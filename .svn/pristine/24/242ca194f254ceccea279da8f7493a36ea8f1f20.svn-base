@@ -1,0 +1,30 @@
+package com.kafang.atgo.backup;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import lombok.Getter;
+
+@Component
+@Getter
+public final class BackupProperties {
+
+	@Value("${mq.host}")
+	private String host;
+	@Value("${mq.port}")
+	private int port;
+	@Value("${mq.username}")
+	private String mqUsername;
+	@Value("${mq.password}")
+	private String mqPassword;
+
+	@Value("${mq.auto.ack}")
+	private boolean isMqAutoAck;
+
+	@Value("${mq.auto.recovery}")
+	private boolean isMqAutoRecovery;
+
+	@Value("${mq.queue.biz.backup}")
+	private String receiveBizQueue;
+
+}

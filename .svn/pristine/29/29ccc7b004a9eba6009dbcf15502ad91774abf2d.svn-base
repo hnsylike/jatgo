@@ -1,0 +1,46 @@
+package com.kafang.atgo.restful.config;
+
+import com.kafang.atgo.restful.filter.AtgoExceptionMapper;
+import com.kafang.atgo.restful.filter.AuthorizationFilter;
+import com.kafang.atgo.restful.filter.CorsFilter;
+import com.kafang.atgo.restful.filter.RequestFilter;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.spring.scope.RequestContextFilter;
+import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+import org.springframework.core.type.filter.AnnotationTypeFilter;
+import org.springframework.stereotype.Component;
+import org.springframework.util.ClassUtils;
+
+import javax.ws.rs.Path;
+import javax.ws.rs.ext.Provider;
+import java.util.stream.Collectors;
+
+/**
+ * Created by User on 2018/9/17.
+ */
+@Component
+public class JerseyConfig extends ResourceConfig {
+    public JerseyConfig() {
+        register(RequestContextFilter.class)
+                .register(RequestFilter.class)
+                .register(CorsFilter.class);
+        workaroundPackages("com.kafang.atgo.restful.resource");
+//        register(MultiPartFeature.class);
+        register(AtgoExceptionMapper.class);
+        register(AuthorizationFilter.class);
+
+    }
+
+    //to solve the Spring Boot and Jersey integration issue, as per https://www.jianshu.com/p/b00bdb90b796
+    private void workaroundPackages(String scanPackage) {
+        ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
+        // add more annotation filters if you need
+        scanner.addIncludeFilter(new AnnotationTypeFilter(Path.class));
+        scanner.addIncludeFilter(new AnnotationTypeFilter(Provider.class));
+        this.registerClasses(scanner.findCandidateComponents(scanPackage).stream()
+                .map(beanDefinition -> ClassUtils
+                        .resolveClassName(beanDefinition.getBeanClassName(), this.getClassLoader()))
+                .collect(Collectors.toSet()));
+
+    }
+}

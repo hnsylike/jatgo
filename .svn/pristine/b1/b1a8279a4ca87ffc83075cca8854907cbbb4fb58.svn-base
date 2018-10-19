@@ -1,0 +1,58 @@
+package com.kafang.atgo.backup;
+
+import io.ffreedom.common.charset.Charsets;
+import io.ffreedom.common.log.UseLogger;
+import io.ffreedom.common.utils.StringUtil;
+import io.ffreedom.transport.rabbitmq.RabbitMqReceiver;
+import io.ffreedom.transport.rabbitmq.config.RmqReceiverConfigurator;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
+
+@Slf4j
+@Component
+public class BackupModuleMessageReceiver {
+
+	@Value("${mq.host}")
+	private String host;
+	@Value("${mq.port}")
+	private int port;
+	@Value("${mq.username}")
+	private String mqUsername;
+	@Value("${mq.password}")
+	private String mqPassword;
+
+	@Value("${mq.auto.ack}")
+	private boolean isMqAutoAck;
+
+	@Value("${mq.auto.recovery}")
+	private boolean isMqAutoRecovery;
+
+	@Value("${mq.queue.biz.backup}")
+	private String receiveBizQueue;
+
+	private BackupModuleMessageHandler messageHandler;
+
+	@Autowired
+	public BackupModuleMessageReceiver(BackupModuleMessageHandler messageHandler) {
+		this.messageHandler = messageHandler;
+	}
+
+	@PostConstruct
+	public void init() {
+		new RabbitMqReceiver("BackupReceiver", RmqReceiverConfigurator.configuration().setConnectionParam(host, port)
+				.setUserParam(mqUsername, mqPassword).setShutdownEvent(ex -> UseLogger.error(log, ex))
+				.setReceiveQueue(receiveBizQueue).setAutoAck(isMqAutoAck).setAutomaticRecovery(isMqAutoRecovery),
+				bytes -> {
+					String msgString = new String(bytes, Charsets.UTF8);
+					log.info("BackupModule received message :[{}] at {}", msgString, LocalDateTime.now());
+					if (!StringUtil.isNullOrEmpty(msgString)) {
+						messageHandler.onMessage(msgString);
+					}
+				}).receive();
+	}
+}

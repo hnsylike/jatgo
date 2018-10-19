@@ -1,0 +1,39 @@
+[
+	{
+		"exchange": "",
+		"bindQueue": [
+			"ReportActual"
+		]
+	},
+	{
+		"exchange": "",
+		"bindQueue": [
+			"ReportActual"
+		]
+	},{
+		"exchange": "",
+		"bindQueue": [
+			"ReportActual"
+		]
+	},{
+		"exchange": "",
+		"bindQueue": [
+			"ReportActual"
+		]
+	},{
+		"exchange": "",
+		"bindQueue": [
+			"ReportActual"
+		]
+	},{
+		"exchange": "",
+		"bindQueue": [
+			"ReportActual"
+		]
+	},{
+		"exchange": "",
+		"bindQueue": [
+			"ReportActual"
+		]
+	},
+]

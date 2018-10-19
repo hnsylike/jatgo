@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="jatgo-backup" />
+        <module name="jatgo-bean" />
+        <module name="jatgo-common" />
+        <module name="jatgo-install" />
+        <module name="jatgo-restful" />
+        <module name="jatgo-risk" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="jatgo-memory" target="1.8" />
+      <module name="jatgo-persistence" target="1.8" />
+      <module name="jatgo-service" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

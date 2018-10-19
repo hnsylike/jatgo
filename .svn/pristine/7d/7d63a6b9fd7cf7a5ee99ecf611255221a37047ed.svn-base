@@ -1,0 +1,24 @@
+atgo.db.url=jdbc:mysql://${mysql_ipAddress}:${mysql_port}/${mysql_databaseName}?user=${mysql_username}&password=${mysql_password}&useSSL=false&characterEncoding=utf-8
+
+
+mq.host = ${rabbitMQ_ipAddress}
+mq.port = ${rabbitMQ_port}
+mq.username = ${rabbitMQ_username}
+mq.password = ${rabbitMQ_password}
+
+mq.exchange.report.actual = ${rabbitMQ_exchReportActual}
+mq.exchange.report.actual.bindQueues = ${rabbitMQ_queueBizWebServer}, ${rabbitMQ_queueRecWebServer}
+mq.queue.biz.webserver = ${rabbitMQ_queueBizWebServer}
+
+mq.exchange.order.actual = ${rabbitMQ_exchOrderActual}
+mq.exchange.order.actual.bindQueues = ${rabbitMQ_queueBizAdaptor}, ${rabbitMQ_queueRecAdaptor}
+
+server.port=${ATGO_WEB_SERVER_PORT}
+logging.path=${ATGO_LOGS_DIR}
+sms=${ATGO_SMS}
+rest_server=${ATGO_SMS_IP}
+sid=${ATGO_SMS_SID}
+token=${ATGO_SMS_TOKEN}
+appid=${ATGO_SMS_APPID}
+
+atgo.defult.broker=${ATGO_DEFAULT_BROKER}

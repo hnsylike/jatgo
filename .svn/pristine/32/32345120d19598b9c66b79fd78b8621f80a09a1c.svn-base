@@ -1,0 +1,122 @@
+package com.kafang.atgo.restful.resource;
+
+import com.kafang.atgo.restful.WebApp;
+import com.kafang.atgo.restful.dto.rep.ResponseTemplate;
+import com.kafang.atgo.restful.entity.AgClient;
+import com.kafang.atgo.restful.entity.AgCustomer;
+import com.kafang.atgo.restful.sql.UserManagerTables;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
+import org.junit.Assert;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
+
+
+/**
+ * Created by xuejian.sun on 2018/10/8.
+ */
+@Slf4j
+@RunWith(SpringRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SpringBootTest(classes = WebApp.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class UserRestfulApiTest extends AbstractBaseControllerTest {
+
+
+    @Override
+    protected String subPath() {
+        return "/user";
+    }
+
+    @UserManagerTables
+    @Test
+    public void findAll() {
+        ResponseTemplate<List<AgCustomer>> template = getForObj(
+                baseURL.toString() + "/queryCustomer",
+                new ParameterizedTypeReference<ResponseTemplate<List<AgCustomer>>>() {
+                });
+        Assert.assertEquals("请求错误，预期http状态码为200", 200,template.getHttpCode());
+        List<AgCustomer> responseEntity = template.getResponseEntity();
+        Assert.assertEquals("查询数据库数据出错", 2, responseEntity.size());
+        Assert.assertEquals("customer值错误","customer2",responseEntity.get(0).getCustomerName());
+        Assert.assertEquals("customer值错误","customer3",responseEntity.get(1).getCustomerName());
+    }
+
+    @UserManagerTables
+    @Test
+    public void getCustomer() {
+        ResponseTemplate<List<AgClient>> template = getForObj(
+                baseURL.toString() + "/getCustomer/{customerid}",
+                new ParameterizedTypeReference<ResponseTemplate<List<AgClient>>>() {
+                },2);
+        Assert.assertEquals("请求错误，预期http状态码为200", 200,template.getHttpCode());
+        List<AgClient> responseEntity = template.getResponseEntity();
+        Assert.assertEquals("查询数据库数据出错", 1, responseEntity.size());
+        AgClient agClient = responseEntity.get(0);
+        Assert.assertEquals("clientName 错误","clientTest",responseEntity.get(0).getClientName());
+        Assert.assertNull("FastJsonIgnore inoperative",agClient.getAdaptorPwd1());
+        Assert.assertNull("FastJsonIgnore inoperative",agClient.getAdaptorPwd2());
+        Assert.assertNull("FastJsonIgnore inoperative",agClient.getAdaptorPwd3());
+        Assert.assertTrue("adaptorUser1 cannot be null",StringUtils.isNotBlank(agClient.getAdaptorUser1()));
+        Assert.assertTrue("adaptorUser2 cannot be null",StringUtils.isNotBlank(agClient.getAdaptorUser2()));
+        Assert.assertTrue("adaptorUser3 cannot be null",StringUtils.isNotBlank(agClient.getAdaptorUser3()));
+        Assert.assertTrue("adaptorType cannot be null",StringUtils.isNotBlank(agClient.getAdaptorType()));
+        Assert.assertTrue(StringUtils.isNotBlank(agClient.getBroker()));
+        Assert.assertNotNull("clientId cannot be null",agClient.getClientId());
+        Assert.assertEquals(0,agClient.getIsCredit());
+    }
+
+    @Test
+    public void getUser() {
+    }
+
+    @Test
+    public void getPhone() {
+    }
+
+    @Test
+    public void delCustomerUser() {
+    }
+
+    @Test
+    public void delClient() {
+    }
+
+    @Test
+    public void delCustomer() {
+    }
+
+    @Test
+    public void getid() {
+    }
+
+    @Test
+    public void addCustomer() {
+    }
+
+    @Test
+    public void addUser() {
+    }
+
+    @Test
+    public void addClient() {
+    }
+
+    @Test
+    public void findCustomer() {
+    }
+
+    @Test
+    public void findStrategy() {
+    }
+
+    @Test
+    public void checkPhone() {
+    }
+}
